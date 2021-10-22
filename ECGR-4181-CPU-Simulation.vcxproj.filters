@@ -6,6 +6,12 @@
     <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp">
       <Filter>Functional-Blocks\DECODER</Filter>
     </ClCompile>
+    <ClCompile Include="Data-Handler\Event.cpp">
+      <Filter>Data-Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Data-Handler\Instruction.cpp">
+      <Filter>Data-Handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
@@ -28,6 +34,12 @@
     <ClInclude Include="System.h" />
     <ClInclude Include="Functional-Blocks\DECODER\Decoder.h">
       <Filter>Functional-Blocks\DECODER</Filter>
+    </ClInclude>
+    <ClInclude Include="Data-Handler\Event.h">
+      <Filter>Data-Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Data-Handler\Instruction.h">
+      <Filter>Data-Handler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
