@@ -1,0 +1,20 @@
+readReg1 - The first location of the registor in the registor file 
+readReg2 - The second location of the registor in the registor file.
+writeEnable - Enable the register file for writing
+writeReg - The register in the register file to write to.
+writeSel - Control the mux that controls where the data comes from. The data get writen into the register file.
+immi - A 12-bit immediate
+immi2 - The 20-bit immediate for U-type, UJ-type
+sign - A control signal to control if to sign extend or zero extend.
+ALUsrc - Chooses between the immediate or the register data.
+ALUop - Control the function of the ALU
+ALUdataSel - Control where to send the data to the register or the memory to address the memory.
+flagControl - output the status of the flags set by the regsistor.
+offset - A 13-bit immediate used for branching
+memRead - Set the memory to output data
+memWrite - Set the memory to receive data
+memSize - The size of the data for the memory (Byte, half-word, word)
+jump - Control the mux to use the jump instructions
+aui - control the mux to use the aui instruction
+jalr - control the mux to use between the jalr or jal.
+

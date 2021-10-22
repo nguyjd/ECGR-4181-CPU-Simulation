@@ -1,0 +1,18 @@
+-----------------Color--------------------
+
+Red - The control signal coming from the decoder
+green - the data inbetween the functional blocks.
+
+---------------File Name------------------
+Main Diagram.png - Main diagram with the stages for pipeling
+ALU.jpg - Has the data flow for ALU opertaion instruction: ADD, SUB, XOR, OR, ADD, DIV, MUL ... etc
+ALU-i.jpg - has the data flow for the ALU immediate instructions.
+LB.jpg - has the data path for LB
+LH.jpg - has the data path for LH
+LW.jpg - has the data path for LW
+Branching.jpg - has the data flow for the branching instruction such as BEQ, BLT, BGT ... etc
+LUI.jpg - has the data path for LUI
+AUIPC.jpg - has the data path for AUIPC
+JAL.jpg - has the data path for JAL
+JALR.jpg - has the data path for JALR
+Store.jpg - has the data path for storing instruction, SB, SH, SW
