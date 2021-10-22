@@ -2,5 +2,32 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="System.cpp" />
+    <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp">
+      <Filter>Functional-Blocks\DECODER</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Functional-Blocks">
+      <UniqueIdentifier>{c73ebde7-0981-42f5-bcf2-e958a5acfbd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\ALU">
+      <UniqueIdentifier>{c5bf74ad-bd7b-4122-a5e4-5a75523b772d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\MUX">
+      <UniqueIdentifier>{d82897be-7224-480f-97a8-c7773d7944ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data-Handler">
+      <UniqueIdentifier>{60a47a47-0ac9-4344-bebd-795f94a2023b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\DECODER">
+      <UniqueIdentifier>{30ce1e77-2c26-4a50-8bce-8404535ff7b8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="System.h" />
+    <ClInclude Include="Functional-Blocks\DECODER\Decoder.h">
+      <Filter>Functional-Blocks\DECODER</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
