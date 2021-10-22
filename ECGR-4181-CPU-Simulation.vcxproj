@@ -79,6 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="Data-Handler\Event.cpp" />
     <ClCompile Include="Data-Handler\Instruction.cpp" />
+    <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp" />
     <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="System.cpp" />
@@ -149,8 +151,12 @@
   <ItemGroup>
     <ClInclude Include="Data-Handler\Event.h" />
     <ClInclude Include="Data-Handler\Instruction.h" />
+    <ClInclude Include="Functional-Blocks\ADDER\Adder.h" />
     <ClInclude Include="Functional-Blocks\DECODER\Decoder.h" />
     <ClInclude Include="System.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

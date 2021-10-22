@@ -12,6 +12,9 @@
     <ClCompile Include="Data-Handler\Instruction.cpp">
       <Filter>Data-Handler</Filter>
     </ClCompile>
+    <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp">
+      <Filter>Functional-Blocks\ADDER</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
@@ -29,6 +32,9 @@
     <Filter Include="Functional-Blocks\DECODER">
       <UniqueIdentifier>{30ce1e77-2c26-4a50-8bce-8404535ff7b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Functional-Blocks\ADDER">
+      <UniqueIdentifier>{f5775a40-6364-4bf0-ac1e-838ea88c497d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h" />
@@ -41,5 +47,11 @@
     <ClInclude Include="Data-Handler\Instruction.h">
       <Filter>Data-Handler</Filter>
     </ClInclude>
+    <ClInclude Include="Functional-Blocks\ADDER\Adder.h">
+      <Filter>Functional-Blocks\ADDER</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>
