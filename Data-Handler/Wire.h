@@ -9,6 +9,7 @@ class Wire : private Data
 public:
 	Wire();
 	Wire(std::string data);
+	Wire(long long int wireCount);
 	Wire(std::string data, long long int wireCount);
 
 	// Set the data on the wires.

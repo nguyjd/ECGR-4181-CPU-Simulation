@@ -15,6 +15,21 @@ Wire::Wire(std::string data) : Data(data)
 
 }
 
+Wire::Wire(long long int wireCount)
+{
+	dataStr = "";
+	for (int i = 0; i < wireCount; i++)
+	{
+
+		dataStr += '0';
+
+	}
+
+	numWire = wireCount;
+	validData = DataValidation();
+
+}
+
 Wire::Wire(std::string data, long long int wireCount) : Data(data)
 {
 
