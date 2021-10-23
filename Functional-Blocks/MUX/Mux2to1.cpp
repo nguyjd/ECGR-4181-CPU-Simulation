@@ -75,6 +75,7 @@ void Mux2to1::Update()
 {
 
 	// Check the config before updating the data.
+	validConfig = CheckConnection();
 	if (validConfig)
 	{
 
@@ -99,9 +100,16 @@ void Mux2to1::Update()
 	{
 
 		// Let the dev know that the something is wrong.
-		std::cout << "A mux is misconfigured." << std::endl;
+		std::cout << "A mux is misconfigured or data received was invalid" << std::endl;
 
 	}
+
+}
+
+bool Mux2to1::IsMuxConfigValid()
+{
+	
+	return validConfig;
 
 }
 
@@ -116,26 +124,26 @@ bool Mux2to1::CheckConnection()
 
 	}
 
-	// Check all the bus sizes.
-	if (inputA->GetAmountofWires() != INPUTABITS)
+	// Check all the bus size and check if the data is valid.
+	if (inputA->GetAmountofWires() != DATASIZE || !inputA->IsWireDataValid())
 	{
 
 		return false;
 
 	}
-	if (inputB->GetAmountofWires() != INPUTBBITS)
+	if (inputB->GetAmountofWires() != DATASIZE || !inputB->IsWireDataValid())
 	{
 
 		return false;
 
 	}
-	if (selectWire->GetAmountofWires() != SELECTBITS)
+	if (selectWire->GetAmountofWires() != SELECTBITS || !selectWire->IsWireDataValid())
 	{
 
 		return false;
 
 	}
-	if (outputWire->GetAmountofWires() != OUTPUTBITS)
+	if (outputWire->GetAmountofWires() != DATASIZE || !outputWire->IsWireDataValid())
 	{
 
 		return false;

@@ -21,13 +21,13 @@ public:
 	// Update the states of the wires.
 	void Update();
 
+	bool IsMuxConfigValid();
+
 private:
 
 	// The size of the bus of each wire.
-	const long long INPUTABITS = 32;
-	const long long INPUTBBITS = 32;
+	const long long DATASIZE = 32;
 	const long long SELECTBITS = 1;
-	const long long OUTPUTBITS = 32;
 
 	// Check if the size of the bus is correct and if the wire exist.
 	bool CheckConnection();
