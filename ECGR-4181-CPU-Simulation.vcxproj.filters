@@ -30,6 +30,18 @@
     <ClCompile Include="Functional-Blocks\MUX\Mux4to1.cpp">
       <Filter>Functional-Blocks\MUX</Filter>
     </ClCompile>
+    <ClCompile Include="Functional-Blocks\EXTEND\SignExtend.cpp">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\EXTEND\Extend.cpp">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\EXTEND\ZeroExtend.cpp">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\SHIFT\ShiftLeft.cpp">
+      <Filter>Functional-Blocks\SHIFT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
@@ -49,6 +61,12 @@
     </Filter>
     <Filter Include="Functional-Blocks\ADDER">
       <UniqueIdentifier>{f5775a40-6364-4bf0-ac1e-838ea88c497d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\EXTEND">
+      <UniqueIdentifier>{03a46001-2fbc-4c75-88cf-db56149ed62a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\SHIFT">
+      <UniqueIdentifier>{08cbe0a7-c2bf-4e23-b6cb-9ebf79fb89ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +97,18 @@
     </ClInclude>
     <ClInclude Include="Functional-Blocks\MUX\Mux4to1.h">
       <Filter>Functional-Blocks\MUX</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\EXTEND\SignExtend.h">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\EXTEND\Extend.h">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\EXTEND\ZeroExtend.h">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\SHIFT\ShiftLeft.h">
+      <Filter>Functional-Blocks\SHIFT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
