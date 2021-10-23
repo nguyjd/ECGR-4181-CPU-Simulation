@@ -132,7 +132,6 @@ void Decoder::DecodeInstruction()
 	opcode = instruction.substr(25, 7);
 
 	// Identify opcodes.
-	
 	// ALU Operations
 	if (opcode.compare("0110011") == 0)
 	{
