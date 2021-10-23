@@ -75,6 +75,14 @@ bool Extend::CheckConnection()
 
 	}
 
+	// Check to see if the input is smaller than the output.
+	if (inputBusSize >= outputBusSize)
+	{
+
+		return false;
+
+	}
+
 	return true;
 
 }
