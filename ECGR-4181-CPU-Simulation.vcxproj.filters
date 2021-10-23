@@ -15,6 +15,21 @@
     <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp">
       <Filter>Functional-Blocks\ADDER</Filter>
     </ClCompile>
+    <ClCompile Include="Functional-Blocks\ALU\Alu.cpp">
+      <Filter>Functional-Blocks\ALU</Filter>
+    </ClCompile>
+    <ClCompile Include="Data-Handler\Wire.cpp">
+      <Filter>Data-Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Data-Handler\Data.cpp">
+      <Filter>Data-Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\MUX\Mux2to1.cpp">
+      <Filter>Functional-Blocks\MUX</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\MUX\Mux4to1.cpp">
+      <Filter>Functional-Blocks\MUX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
@@ -49,6 +64,21 @@
     </ClInclude>
     <ClInclude Include="Functional-Blocks\ADDER\Adder.h">
       <Filter>Functional-Blocks\ADDER</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\ALU\Alu.h">
+      <Filter>Functional-Blocks\ALU</Filter>
+    </ClInclude>
+    <ClInclude Include="Data-Handler\Wire.h">
+      <Filter>Data-Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Data-Handler\Data.h">
+      <Filter>Data-Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\MUX\Mux2to1.h">
+      <Filter>Functional-Blocks\MUX</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\MUX\Mux4to1.h">
+      <Filter>Functional-Blocks\MUX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

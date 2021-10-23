@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -141,18 +141,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Data-Handler\Data.cpp" />
     <ClCompile Include="Data-Handler\Event.cpp" />
     <ClCompile Include="Data-Handler\Instruction.cpp" />
+    <ClCompile Include="Data-Handler\Wire.cpp" />
     <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp" />
+    <ClCompile Include="Functional-Blocks\ALU\Alu.cpp" />
     <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp" />
+    <ClCompile Include="Functional-Blocks\MUX\Mux2to1.cpp" />
+    <ClCompile Include="Functional-Blocks\MUX\Mux4to1.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="System.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Data-Handler\Data.h" />
     <ClInclude Include="Data-Handler\Event.h" />
     <ClInclude Include="Data-Handler\Instruction.h" />
+    <ClInclude Include="Data-Handler\Wire.h" />
     <ClInclude Include="Functional-Blocks\ADDER\Adder.h" />
+    <ClInclude Include="Functional-Blocks\ALU\Alu.h" />
     <ClInclude Include="Functional-Blocks\DECODER\Decoder.h" />
+    <ClInclude Include="Functional-Blocks\MUX\Mux2to1.h" />
+    <ClInclude Include="Functional-Blocks\MUX\Mux4to1.h" />
     <ClInclude Include="System.h" />
   </ItemGroup>
   <ItemGroup>
