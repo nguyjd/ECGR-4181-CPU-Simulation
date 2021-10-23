@@ -1,0 +1,34 @@
+#ifndef __SHIFTLEFT_H__
+#define __SHIFTLEFT_H__
+
+#include "Wire.h"
+
+class ShiftLeft
+{
+
+public:
+	
+	ShiftLeft();
+	ShiftLeft(Wire* input, Wire* output, long long shiftCount);
+
+	void Update();
+
+	bool IsShiftConfigValid();
+
+private:
+
+	// Check if the size of the bus is correct and if the wire exist.
+	bool CheckConnection();
+
+	// True if the extend is configured correctly.
+	bool validConfig;
+
+	long long amountToShift;
+	Wire* inputWire;
+	Wire* outputWire;
+
+	
+
+};
+
+#endif

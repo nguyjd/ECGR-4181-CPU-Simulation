@@ -4,6 +4,7 @@
 #include "Mux4to1.h"
 #include "SignExtend.h"
 #include "ZeroExtend.h"
+#include "ShiftLeft.h"
 
 
 int main()
@@ -108,6 +109,36 @@ int main()
 
 	}
 
+	std::cout << "SHIFT LEFT 12" << std::endl;
+
+
+	Wire* shiftInput = new Wire("00000000000000000000000000000001");
+	Wire* shiftoutput = new Wire(32);
+	ShiftLeft* shift = new ShiftLeft(shiftInput, shiftoutput, 1);
+
+	if (shift->IsShiftConfigValid())
+	{
+
+		std::cout << "The shift left is valid." << std::endl;
+
+	}
+
+	if (shiftoutput->IsWireDataValid())
+	{
+
+		std::cout << shiftoutput->GetWireDataStr() << std::endl;
+
+	}
+
+	shift->Update();
+
+	if (shiftoutput->IsWireDataValid())
+	{
+
+		std::cout << shiftoutput->GetWireDataStr() << std::endl;
+
+	}
+
 	delete inputA;
 	delete inputB;
 	delete inputC;
@@ -118,6 +149,10 @@ int main()
 	delete mux1;
 	delete ExInput;
 	delete ExOutput;
+	delete shift;
+	delete shiftInput;
+	delete shiftoutput;
+
 
 	return 0;
 
