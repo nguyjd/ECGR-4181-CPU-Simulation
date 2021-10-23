@@ -17,6 +17,8 @@ public:
 
 	virtual void Update() = 0;
 
+	bool IsExtendConfigValid();
+
 protected:
 
 	// Check if the size of the bus is correct and if the wire exist.

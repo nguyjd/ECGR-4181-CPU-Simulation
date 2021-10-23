@@ -50,6 +50,13 @@ void Extend::ConnectOutput(Wire* wire)
 
 }
 
+bool Extend::IsExtendConfigValid()
+{
+
+	return validConfig;
+
+}
+
 bool Extend::CheckConnection()
 {
 
