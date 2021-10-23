@@ -2,6 +2,8 @@
 #include <Adder.h>
 #include "Mux2to1.h"
 #include "Mux4to1.h"
+#include "SignExtend.h"
+#include "ZeroExtend.h"
 
 
 int main()
@@ -50,6 +52,62 @@ int main()
 
 	}
 
+	Wire* ExInput = new Wire("110111001");
+	Wire* ExOutput = new Wire(32);
+
+	SignExtend* signEx = new SignExtend(ExInput, ExOutput);
+	ZeroExtend* zeroEx = new ZeroExtend(ExInput, ExOutput);
+
+	if (signEx->IsExtendConfigValid())
+	{
+
+		std::cout << "The sign extend is valid" << std::endl;
+
+	}
+
+	if (signEx->IsExtendConfigValid())
+	{
+
+		std::cout << "The zero extend is valid" << std::endl;
+
+	}
+
+	std::cout << "SIGN EXTEND" << std::endl;
+
+	if (ExOutput->IsWireDataValid())
+	{
+
+		std::cout << ExOutput->GetWireDataStr() << std::endl;
+
+	}
+
+	signEx->Update();
+
+	if (ExOutput->IsWireDataValid())
+	{
+
+		std::cout << ExOutput->GetWireDataStr() << std::endl;
+
+	}
+
+	std::cout << "ZERO EXTEND" << std::endl;
+
+	if (ExOutput->IsWireDataValid())
+	{
+
+		std::cout << ExOutput->GetWireDataStr() << std::endl;
+
+	}
+
+	zeroEx->Update();
+
+	if (ExOutput->IsWireDataValid())
+	{
+
+		std::cout << ExOutput->GetWireDataStr() << std::endl;
+
+	}
+
 	delete inputA;
 	delete inputB;
 	delete inputC;
@@ -58,6 +116,8 @@ int main()
 	delete output;
 	delete adda;
 	delete mux1;
+	delete ExInput;
+	delete ExOutput;
 
 	return 0;
 
