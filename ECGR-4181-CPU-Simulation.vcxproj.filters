@@ -15,9 +15,6 @@
     <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp">
       <Filter>Functional-Blocks\ADDER</Filter>
     </ClCompile>
-    <ClCompile Include="Functional-Blocks\ALU\Alu.cpp">
-      <Filter>Functional-Blocks\ALU</Filter>
-    </ClCompile>
     <ClCompile Include="Data-Handler\Wire.cpp">
       <Filter>Data-Handler</Filter>
     </ClCompile>
@@ -42,13 +39,13 @@
     <ClCompile Include="Functional-Blocks\SHIFT\ShiftLeft.cpp">
       <Filter>Functional-Blocks\SHIFT</Filter>
     </ClCompile>
+    <ClCompile Include="Functional-Blocks\REGISTERFILE\RegisterFile.cpp">
+      <Filter>Functional-Blocks\REGISTERFILE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
       <UniqueIdentifier>{c73ebde7-0981-42f5-bcf2-e958a5acfbd8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Functional-Blocks\ALU">
-      <UniqueIdentifier>{c5bf74ad-bd7b-4122-a5e4-5a75523b772d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Functional-Blocks\MUX">
       <UniqueIdentifier>{d82897be-7224-480f-97a8-c7773d7944ca}</UniqueIdentifier>
@@ -68,6 +65,9 @@
     <Filter Include="Functional-Blocks\SHIFT">
       <UniqueIdentifier>{08cbe0a7-c2bf-4e23-b6cb-9ebf79fb89ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Functional-Blocks\REGISTERFILE">
+      <UniqueIdentifier>{430610da-6a68-4dbc-be6f-668a1590c1ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h" />
@@ -82,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="Functional-Blocks\ADDER\Adder.h">
       <Filter>Functional-Blocks\ADDER</Filter>
-    </ClInclude>
-    <ClInclude Include="Functional-Blocks\ALU\Alu.h">
-      <Filter>Functional-Blocks\ALU</Filter>
     </ClInclude>
     <ClInclude Include="Data-Handler\Wire.h">
       <Filter>Data-Handler</Filter>
@@ -109,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="Functional-Blocks\SHIFT\ShiftLeft.h">
       <Filter>Functional-Blocks\SHIFT</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\REGISTERFILE\RegisterFile.h">
+      <Filter>Functional-Blocks\REGISTERFILE</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

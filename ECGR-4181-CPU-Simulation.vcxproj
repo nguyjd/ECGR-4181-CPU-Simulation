@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Functional-Blocks\REGISTERFILE\;$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -146,13 +146,13 @@
     <ClCompile Include="Data-Handler\Instruction.cpp" />
     <ClCompile Include="Data-Handler\Wire.cpp" />
     <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp" />
-    <ClCompile Include="Functional-Blocks\ALU\Alu.cpp" />
     <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp" />
     <ClCompile Include="Functional-Blocks\EXTEND\Extend.cpp" />
     <ClCompile Include="Functional-Blocks\EXTEND\SignExtend.cpp" />
     <ClCompile Include="Functional-Blocks\EXTEND\ZeroExtend.cpp" />
     <ClCompile Include="Functional-Blocks\MUX\Mux2to1.cpp" />
     <ClCompile Include="Functional-Blocks\MUX\Mux4to1.cpp" />
+    <ClCompile Include="Functional-Blocks\REGISTERFILE\RegisterFile.cpp" />
     <ClCompile Include="Functional-Blocks\SHIFT\ShiftLeft.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="System.cpp" />
@@ -163,13 +163,13 @@
     <ClInclude Include="Data-Handler\Instruction.h" />
     <ClInclude Include="Data-Handler\Wire.h" />
     <ClInclude Include="Functional-Blocks\ADDER\Adder.h" />
-    <ClInclude Include="Functional-Blocks\ALU\Alu.h" />
     <ClInclude Include="Functional-Blocks\DECODER\Decoder.h" />
     <ClInclude Include="Functional-Blocks\EXTEND\Extend.h" />
     <ClInclude Include="Functional-Blocks\EXTEND\SignExtend.h" />
     <ClInclude Include="Functional-Blocks\EXTEND\ZeroExtend.h" />
     <ClInclude Include="Functional-Blocks\MUX\Mux2to1.h" />
     <ClInclude Include="Functional-Blocks\MUX\Mux4to1.h" />
+    <ClInclude Include="Functional-Blocks\REGISTERFILE\RegisterFile.h" />
     <ClInclude Include="Functional-Blocks\SHIFT\ShiftLeft.h" />
     <ClInclude Include="System.h" />
   </ItemGroup>
