@@ -5,6 +5,7 @@
 #include "SignExtend.h"
 #include "ZeroExtend.h"
 #include "ShiftLeft.h"
+#include "RegisterFile.h"
 
 
 int main()
@@ -139,6 +140,51 @@ int main()
 
 	}
 
+	std::cout << "Register File" << std::endl;
+
+	Wire* regOneLocation = new Wire(5);
+	Wire* regTwoLocation = new Wire(5);
+	Wire* writeEnable = new Wire(1);
+	Wire* writeLocation = new Wire(5);
+	Wire* writeData = new Wire(32);
+
+	Wire* regOneOutput = new Wire(32);
+	Wire* regTwoOutput = new Wire(32);
+
+	RegisterFile* regs = new RegisterFile(regOneLocation, regTwoLocation, regOneOutput, regTwoOutput, writeEnable, writeLocation, writeData);
+
+	if (regs->IsRegFileConfigValid())
+	{
+
+		std::cout << "The register file is valid." << std::endl;
+
+	}
+
+	writeEnable->SetWireData("1");
+	writeLocation->SetWireData("00001");
+	writeData->SetWireData("00000000000000000000000000000101");
+
+	regs->Update();
+
+	writeLocation->SetWireData("00101");
+	writeData->SetWireData("00000000000000000000000110000101");
+
+	regs->Update();
+
+	writeEnable->SetWireData("0");
+
+	writeLocation->SetWireData("00101");
+	writeData->SetWireData("00000000000000000000000111111101");
+	regOneLocation->SetWireData("00001");
+	regTwoLocation->SetWireData("00101");
+
+	regs->Update();
+
+	regs->PrintRegisters();
+
+	std::cout << "X1: " << regOneOutput->GetWireDataStr() << std::endl;
+	std::cout << "X5: " << regTwoOutput->GetWireDataStr() << std::endl;
+
 	delete inputA;
 	delete inputB;
 	delete inputC;
@@ -152,6 +198,13 @@ int main()
 	delete shift;
 	delete shiftInput;
 	delete shiftoutput;
+	delete regOneLocation;
+	delete regTwoLocation;
+	delete writeEnable;
+	delete writeLocation;
+	delete writeData;
+	delete regOneOutput;
+	delete regTwoOutput;
 
 
 	return 0;
