@@ -3,8 +3,8 @@
 Data::Data()
 {
 
-	validData = false;
-	dataStr = "";
+	dataStr = "00000000000000000000000000000000";
+	validData = DataValidation();
 
 }
 
