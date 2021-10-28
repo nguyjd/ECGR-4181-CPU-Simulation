@@ -26,6 +26,28 @@ ShiftLeft::ShiftLeft(Wire* input, Wire* output, long long shiftCount)
 
 }
 
+void ShiftLeft::ConnectInput(Wire* wire)
+{
+
+	// Set the wire
+	inputWire = wire;
+
+	// Check if the wire is valid.
+	validConfig = CheckConnection();
+
+}
+
+void ShiftLeft::ConnectOutput(Wire* wire)
+{
+
+	// Set the wire
+	outputWire = wire;
+
+	// Check if the wire is valid.
+	validConfig = CheckConnection();
+
+}
+
 void ShiftLeft::Update()
 {
 
