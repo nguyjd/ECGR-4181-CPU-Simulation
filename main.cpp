@@ -1,5 +1,5 @@
 #include <iostream>
-#include <Adder.h>
+#include "Adder.h"
 #include "Mux2to1.h"
 #include "Mux4to1.h"
 #include "SignExtend.h"
@@ -10,11 +10,12 @@
 
 int main()
 {
-	std::string in1 = "00000000000000000000000000000001";
-	std::string in2 = "00000000000000000000000000000101";
+	Wire* wIn1 = new Wire("00000000000000000000000000000001");
+	Wire* wIn2 = new Wire("00000000000000000000000000000101");
+	Wire* out1 = new Wire(32);
 
-
-	Adder *adda = new Adder(in1, in2);
+	Adder *adda = new Adder(wIn1, wIn2, out1);
+	adda->Update();
 	std::cout << adda->OutputResult() << std::endl;
 
 	Wire* inputA = new Wire("00000000000000000000000000000001");
@@ -205,7 +206,9 @@ int main()
 	delete writeData;
 	delete regOneOutput;
 	delete regTwoOutput;
-
+	delete wIn1;
+	delete wIn2;
+	delete out1;
 
 	return 0;
 
