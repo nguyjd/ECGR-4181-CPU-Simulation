@@ -2,8 +2,7 @@
 #define __DECODER_H__
 
 #include "Instruction.h"
-#include <string>
-#include <vector>
+#include "Wire.h"
 
 class Decoder
 {
@@ -15,6 +14,26 @@ public:
     // Debug print outs.
 	void PrintControlLines();
 	void PrintAssembly();
+
+	void ConnectReadReg1(Wire* wire);
+	void ConnectReadReg2(Wire* wire);
+	void ConnectWriteEnable(Wire* wire);
+	void ConnectWriteReg(Wire* wire);
+	void ConnectWriteSel(Wire* wire);
+	void ConnectImmi(Wire* wire);
+	void ConnectImmi2(Wire* wire);
+	void ConnectSign(Wire* wire);
+	void ConnectALUSrc(Wire* wire);
+	void ConnectALUop(Wire* wire);
+	void ConnectALUdataSel(Wire* wire);
+	void ConnectFlagControl(Wire* wire);
+	void ConnectOffset(Wire* wire);
+	void ConnectMemRead(Wire* wire);
+	void ConnectMemWrite(Wire* wire);
+	void ConnectMemSize(Wire* wire);
+	void ConnectJump(Wire* wire);
+	void ConnectAui(Wire* wire);
+	void ConnectJalr(Wire* wire);
 
     // The function to decode the next instruction.
 	void NextInstruction(Instruction inst);
@@ -35,61 +54,61 @@ private:
 
 	// Set all the control signal varibles as bool or string of 0 or 1.
 	// Both readReg1 and 2 are five bits
-	std::string readReg1;
-	std::string readReg2;
+	Wire* readReg1;
+	Wire* readReg2;
 	
 	// Enable writing to the registor file.
-	bool writeEnable;
+	Wire* writeEnable;
 	
 	// Five bits
 	// The registor in the registor file being written to.
-	std::string writeReg;
+	Wire* writeReg;
 	
 	// Two bits
 	// Control where the data comes from to write into the registor.
-	std::string writeSel;
+	Wire* writeSel;
 
 	// 12-bits immediate
-	std::string immi;
+	Wire* immi;
 	
 	// 20-bits immediate
-	std::string immi2;
+	Wire* immi2;
 
 	// True if the data is signed.
-	bool sign;
+	Wire* sign;
 
 	// Select signal to control if the data is immediate or from the registor.
-	bool ALUSrc;
+	Wire* ALUSrc;
 
 	// Five bits
-	std::string ALUop;
-	bool ALUdataSel;
+	Wire* ALUop;
+	Wire* ALUdataSel;
 
 	// Three bits
-	std::string flagControl;
+	Wire* flagControl;
 
 	// 13 bits
 	// The branch offset
-	std::string offset;
+	Wire* offset;
 
 	// Enable reading from RAM.
-	bool memRead;
+	Wire* memRead;
 	
 	// Enable writing to the RAM
-	bool memWrite;
+	Wire* memWrite;
 	
 	// Two bits
 	// Size of the data requested.
-	std::string memSize;
+	Wire* memSize;
 
 	// Control if we are jumping.
-	bool jump;
+	Wire* jump;
 	
 	// Control if we are using AUIPC or LUI
-	bool aui;
+	Wire* aui;
 
 	// Control if jumping with the registor or an offset.
-	bool jalr;
+	Wire* jalr;
 
 };
 
