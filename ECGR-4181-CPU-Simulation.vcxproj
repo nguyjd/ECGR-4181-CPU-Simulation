@@ -146,6 +146,7 @@
     <ClCompile Include="Data-Handler\Instruction.cpp" />
     <ClCompile Include="Data-Handler\Wire.cpp" />
     <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp" />
+    <ClCompile Include="Functional-Blocks\ALU\ALU.cpp" />
     <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp" />
     <ClCompile Include="Functional-Blocks\EXTEND\Extend.cpp" />
     <ClCompile Include="Functional-Blocks\EXTEND\SignExtend.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Data-Handler\Instruction.h" />
     <ClInclude Include="Data-Handler\Wire.h" />
     <ClInclude Include="Functional-Blocks\ADDER\Adder.h" />
+    <ClInclude Include="Functional-Blocks\ALU\ALU.h" />
     <ClInclude Include="Functional-Blocks\DECODER\Decoder.h" />
     <ClInclude Include="Functional-Blocks\EXTEND\Extend.h" />
     <ClInclude Include="Functional-Blocks\EXTEND\SignExtend.h" />

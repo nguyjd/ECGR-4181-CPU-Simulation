@@ -51,6 +51,9 @@
     <ClCompile Include="Functional-Blocks\MEMORY\Memory.cpp">
       <Filter>Functional-Blocks\MEMORY</Filter>
     </ClCompile>
+    <ClCompile Include="Functional-Blocks\ALU\ALU.cpp">
+      <Filter>Functional-Blocks\ALU</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
@@ -85,6 +88,9 @@
     </Filter>
     <Filter Include="Functional-Blocks\MEMORY">
       <UniqueIdentifier>{0d62a858-e95f-47bc-80a1-e1b6d10e30b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\ALU">
+      <UniqueIdentifier>{22a2c10a-8673-4b32-98c5-43e8c2558e83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="Functional-Blocks\MEMORY\Memory.h">
       <Filter>Functional-Blocks\MEMORY</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\ALU\ALU.h">
+      <Filter>Functional-Blocks\ALU</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
