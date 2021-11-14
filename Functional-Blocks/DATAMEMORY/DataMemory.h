@@ -1,18 +1,18 @@
-#ifndef __MEMORY_H__
-#define __MEMORY_H__
+#ifndef __DATAMEMORY_H__
+#define __DATAMEMORY_H__
 
 #include "Wire.h"
 #include <vector>
 
-class Memory
+class DataMemory
 {
 
 public:
-	Memory();
-	Memory(Wire* size, Wire* read, Wire* write, Wire* inputdata, Wire* address,
+	DataMemory();
+	DataMemory(Wire* size, Wire* read, Wire* write, Wire* inputdata, Wire* address,
 			Wire* output8, Wire* output16, Wire* output32);
 
-	~Memory();
+	~DataMemory();
 
 	// Connect the wires and checks if the config is valid.
 	void ConnectMemSize(Wire* wire);
@@ -25,7 +25,7 @@ public:
 	void ConnectOutputThirtyTwoBits(Wire* wire);
 
 	void Update();
-	bool IsMemoryConfigValid();
+	bool IsDataMemoryConfigValid();
 
 	void PrintMemory();
 

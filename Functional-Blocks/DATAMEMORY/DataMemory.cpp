@@ -1,6 +1,6 @@
-#include "Memory.h"
+#include "DataMemory.h"
 
-Memory::Memory()
+DataMemory::DataMemory()
 {
 
 	memSize = nullptr;
@@ -23,7 +23,7 @@ Memory::Memory()
 
 }
 
-Memory::Memory(Wire* size, Wire* read, Wire* write, Wire* inputdata, Wire* address, Wire* output8, Wire* output16, Wire* output32)
+DataMemory::DataMemory(Wire* size, Wire* read, Wire* write, Wire* inputdata, Wire* address, Wire* output8, Wire* output16, Wire* output32)
 {
 
 	memSize = size;
@@ -46,7 +46,7 @@ Memory::Memory(Wire* size, Wire* read, Wire* write, Wire* inputdata, Wire* addre
 
 }
 
-Memory::~Memory()
+DataMemory::~DataMemory()
 {
 
 	for (unsigned long long i = 0; i < MEMORYSIZE; i++)
@@ -58,7 +58,7 @@ Memory::~Memory()
 
 }
 
-void Memory::ConnectMemSize(Wire* wire)
+void DataMemory::ConnectMemSize(Wire* wire)
 {
 
 	// Set the wire
@@ -69,7 +69,7 @@ void Memory::ConnectMemSize(Wire* wire)
 
 }
 
-void Memory::ConnectMemRead(Wire* wire)
+void DataMemory::ConnectMemRead(Wire* wire)
 {
 
 	// Set the wire
@@ -80,7 +80,7 @@ void Memory::ConnectMemRead(Wire* wire)
 
 }
 
-void Memory::ConnectMemWrite(Wire* wire)
+void DataMemory::ConnectMemWrite(Wire* wire)
 {
 
 	// Set the wire
@@ -91,7 +91,7 @@ void Memory::ConnectMemWrite(Wire* wire)
 
 }
 
-void Memory::ConnectDataIn(Wire* wire)
+void DataMemory::ConnectDataIn(Wire* wire)
 {
 
 	// Set the wire
@@ -102,7 +102,7 @@ void Memory::ConnectDataIn(Wire* wire)
 
 }
 
-void Memory::ConnectMemAddress(Wire* wire)
+void DataMemory::ConnectMemAddress(Wire* wire)
 {
 
 	// Set the wire
@@ -113,7 +113,7 @@ void Memory::ConnectMemAddress(Wire* wire)
 
 }
 
-void Memory::ConnectOutputEightBits(Wire* wire)
+void DataMemory::ConnectOutputEightBits(Wire* wire)
 {
 
 	// Set the wire
@@ -124,7 +124,7 @@ void Memory::ConnectOutputEightBits(Wire* wire)
 
 }
 
-void Memory::ConnectOutputSixteenBits(Wire* wire)
+void DataMemory::ConnectOutputSixteenBits(Wire* wire)
 {
 
 	// Set the wire
@@ -135,7 +135,7 @@ void Memory::ConnectOutputSixteenBits(Wire* wire)
 
 }
 
-void Memory::ConnectOutputThirtyTwoBits(Wire* wire)
+void DataMemory::ConnectOutputThirtyTwoBits(Wire* wire)
 {
 
 	// Set the wire
@@ -146,7 +146,7 @@ void Memory::ConnectOutputThirtyTwoBits(Wire* wire)
 
 }
 
-void Memory::Update()
+void DataMemory::Update()
 {
 
 	validConfig = CheckConnection();
@@ -239,39 +239,39 @@ void Memory::Update()
 
 }
 
-bool Memory::IsMemoryConfigValid()
+bool DataMemory::IsDataMemoryConfigValid()
 {
 
 	return validConfig;
 
 }
 
-void Memory::PrintMemory()
+void DataMemory::PrintMemory()
 {
 
 	if (!validConfig)
 	{
 
-		std::cout << "The Memory is not configured correctly or bad data has somehow got into the registers. Data cannot be displayed." << std::endl;
+		std::cout << "The DataMemory is not configured correctly or bad data has somehow got into the registers. Data cannot be displayed." << std::endl;
 
 	}
 	else
 	{
 
-		std::cout << "MEMORY CURRENT STATE" << std::endl;
+		std::cout << "DataMemory CURRENT STATE" << std::endl;
 		for (int i = 0; i < MEMORYSIZE; i++)
 		{
 
 			std::cout << "X" << i << ":\t" << ram.at(i)->GetWireDataStr() << std::endl;
 
 		}
-		std::cout << "END OF THE MEMORY" << std::endl;
+		std::cout << "END OF THE DataMemory" << std::endl;
 
 	}
 
 }
 
-bool Memory::CheckConnection()
+bool DataMemory::CheckConnection()
 {
 
 	// Check the wire to see if they exist.
@@ -362,7 +362,7 @@ bool Memory::CheckConnection()
 
 }
 
-int Memory::BinaryToIndex(std::string bin)
+int DataMemory::BinaryToIndex(std::string bin)
 {
 
 	int poweroftwo = 1;

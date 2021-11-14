@@ -17,7 +17,7 @@ add_executable(CPU
 	Functional-Blocks/PROGRAMCOUNTER/ProgramCounter.cpp
 	Functional-Blocks/PIPELINEREGISTERS/PipelineRegisters.cpp
 	Functional-Blocks/ALU/ALU.cpp
-	Functional-Blocks/MEMORY/Memory.cpp
+	Functional-Blocks/DATAMEMORY/DataMemory.cpp
 	Data-Handler/Event.cpp
 	Data-Handler/Instruction.cpp
 	Data-Handler/Data.cpp
@@ -36,5 +36,5 @@ target_include_directories(CPU PRIVATE
 	Functional-Blocks/PROGRAMCOUNTER
 	Functional-Blocks/PIPELINEREGISTERS
 	Functional-Blocks/ALU
-	Functional-Blocks/MEMORY
+	Functional-Blocks/DATAMEMORY
 )

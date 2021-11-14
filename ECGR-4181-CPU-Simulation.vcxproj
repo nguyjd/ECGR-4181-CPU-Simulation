@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Functional-Blocks\ALU\;$(ProjectDir)Functional-Blocks\MEMORY\;$(ProjectDir)Functional-Blocks\PIPELINEREGISTERS\;$(ProjectDir)Functional-Blocks\PROGRAMCOUNTER\;$(ProjectDir)Functional-Blocks\REGISTERFILE\;$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Functional-Blocks\ALU\;$(ProjectDir)Functional-Blocks\DATAMEMORY\;$(ProjectDir)Functional-Blocks\PIPELINEREGISTERS\;$(ProjectDir)Functional-Blocks\PROGRAMCOUNTER\;$(ProjectDir)Functional-Blocks\REGISTERFILE\;$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -147,11 +147,11 @@
     <ClCompile Include="Data-Handler\Wire.cpp" />
     <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp" />
     <ClCompile Include="Functional-Blocks\ALU\ALU.cpp" />
+    <ClCompile Include="Functional-Blocks\DATAMEMORY\DataMemory.cpp" />
     <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp" />
     <ClCompile Include="Functional-Blocks\EXTEND\Extend.cpp" />
     <ClCompile Include="Functional-Blocks\EXTEND\SignExtend.cpp" />
     <ClCompile Include="Functional-Blocks\EXTEND\ZeroExtend.cpp" />
-    <ClCompile Include="Functional-Blocks\MEMORY\Memory.cpp" />
     <ClCompile Include="Functional-Blocks\MUX\Mux2to1.cpp" />
     <ClCompile Include="Functional-Blocks\MUX\Mux4to1.cpp" />
     <ClCompile Include="Functional-Blocks\PIPELINEREGISTERS\PipelineRegisters.cpp" />
@@ -168,11 +168,11 @@
     <ClInclude Include="Data-Handler\Wire.h" />
     <ClInclude Include="Functional-Blocks\ADDER\Adder.h" />
     <ClInclude Include="Functional-Blocks\ALU\ALU.h" />
+    <ClInclude Include="Functional-Blocks\DATAMEMORY\DataMemory.h" />
     <ClInclude Include="Functional-Blocks\DECODER\Decoder.h" />
     <ClInclude Include="Functional-Blocks\EXTEND\Extend.h" />
     <ClInclude Include="Functional-Blocks\EXTEND\SignExtend.h" />
     <ClInclude Include="Functional-Blocks\EXTEND\ZeroExtend.h" />
-    <ClInclude Include="Functional-Blocks\MEMORY\Memory.h" />
     <ClInclude Include="Functional-Blocks\MUX\Mux2to1.h" />
     <ClInclude Include="Functional-Blocks\MUX\Mux4to1.h" />
     <ClInclude Include="Functional-Blocks\PIPELINEREGISTERS\PipelineRegisters.h" />

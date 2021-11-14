@@ -8,8 +8,8 @@
 #include "RegisterFile.h"
 #include "ProgramCounter.h"
 #include "PipelineRegisters.h"
-#include "Memory.h"
 #include "ALU.h"
+#include "DataMemory.h"
 
 
 int main()
@@ -254,9 +254,8 @@ int main()
 	Wire* outputEightBits = new Wire(8);
 	Wire* outputSixteenBits = new Wire(16);
 	Wire* outputThirtyTwoBits = new Wire(32);
-	
-	/*
-	Memory* ram = new Memory(memSize, memRead, memWrite, dataIn, memAddress, outputEightBits, outputSixteenBits, outputThirtyTwoBits);
+
+	DataMemory* ram = new DataMemory(memSize, memRead, memWrite, dataIn, memAddress, outputEightBits, outputSixteenBits, outputThirtyTwoBits);
 
 	memSize->SetWireData("10");
 	memWrite->SetWireData("1");
@@ -275,7 +274,6 @@ int main()
 	std::cout << outputEightBits->GetWireDataStr() << std::endl;
 	std::cout << outputSixteenBits->GetWireDataStr() << std::endl;
 	std::cout << outputThirtyTwoBits->GetWireDataStr() << std::endl;
-	*/
 
 
 	delete inputA;
@@ -321,7 +319,7 @@ int main()
 	delete outputEightBits;
 	delete outputSixteenBits;
 	delete outputThirtyTwoBits;
-	//delete ram;
+	delete ram;
 
 	return 0;
 
