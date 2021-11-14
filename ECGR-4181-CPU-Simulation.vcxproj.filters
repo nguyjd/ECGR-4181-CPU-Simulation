@@ -42,6 +42,9 @@
     <ClCompile Include="Functional-Blocks\REGISTERFILE\RegisterFile.cpp">
       <Filter>Functional-Blocks\REGISTERFILE</Filter>
     </ClCompile>
+    <ClCompile Include="Functional-Blocks\PROGRAMCOUNTER\ProgramCounter.cpp">
+      <Filter>Functional-Blocks\PROGRAMCOUNTER</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
@@ -67,6 +70,9 @@
     </Filter>
     <Filter Include="Functional-Blocks\REGISTERFILE">
       <UniqueIdentifier>{430610da-6a68-4dbc-be6f-668a1590c1ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\PROGRAMCOUNTER">
+      <UniqueIdentifier>{9fdf1fe4-7ae1-4889-a69c-2fbf4a711cf8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="Functional-Blocks\REGISTERFILE\RegisterFile.h">
       <Filter>Functional-Blocks\REGISTERFILE</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\PROGRAMCOUNTER\ProgramCounter.h">
+      <Filter>Functional-Blocks\PROGRAMCOUNTER</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

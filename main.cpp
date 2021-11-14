@@ -6,6 +6,7 @@
 #include "ZeroExtend.h"
 #include "ShiftLeft.h"
 #include "RegisterFile.h"
+#include "ProgramCounter.h"
 
 
 int main()
@@ -186,6 +187,28 @@ int main()
 	std::cout << "X1: " << regOneOutput->GetWireDataStr() << std::endl;
 	std::cout << "X5: " << regTwoOutput->GetWireDataStr() << std::endl;
 
+	Wire* PCInput = new Wire("00000000000000000000000000000010");
+	Wire* PCOutput = new Wire(32);
+	Wire* Clk = new Wire(1);
+
+	ProgramCounter* PC = new ProgramCounter(PCInput, PCOutput, Clk);
+
+	if (PC->IsPCConfigValid())
+	{
+
+		std::cout << "The program counter is setup." << std::endl;
+
+	}
+	
+	PC->Update();
+
+	std::cout << PCOutput->GetWireDataStr() << std::endl;
+
+	Clk->SetWireData("1");
+	PC->Update();
+
+	std::cout << PCOutput->GetWireDataStr() << std::endl;
+
 	delete inputA;
 	delete inputB;
 	delete inputC;
@@ -196,9 +219,12 @@ int main()
 	delete mux1;
 	delete ExInput;
 	delete ExOutput;
+	delete signEx;
+	delete zeroEx;
 	delete shift;
 	delete shiftInput;
 	delete shiftoutput;
+	delete regs;
 	delete regOneLocation;
 	delete regTwoLocation;
 	delete writeEnable;
@@ -209,6 +235,10 @@ int main()
 	delete wIn1;
 	delete wIn2;
 	delete out1;
+	delete PCInput;
+	delete PCOutput;
+	delete Clk;
+	delete PC;
 
 	return 0;
 
