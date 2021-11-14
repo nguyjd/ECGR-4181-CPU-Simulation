@@ -26,28 +26,99 @@ void Adder::Update()
 {
 
 	// Temp Variables
-	std::string tA = input1->GetWireDataStr();
-	std::string tB = input2->GetWireDataStr();
 	std::string tempOut = "00000000000000000000000000000000";
 	char carry = 0;
 
-	// Bitwise full-adder logic 
-	for (int i = 31; i >= 0; i--)
+	//Stores int equivalent of inputs
+	int i_input1 = StringToInt(input1->GetWireDataStr());
+	int i_input2 = StringToInt(input2->GetWireDataStr());
+
+	int results = i_input1 + i_input2;
+
+	// Pushes result to output wire
+	output->SetWireData(IntTo32BitString(results));
+
+}
+
+int Adder::StringToInt(std::string input)
+{
+
+	int poweroftwo = 1;
+	int results = 0;
+
+	// Up to MSB
+	for (int i = input.size() - 1; i > 0; i--)
 	{
 
-		char a = tA[i] - '0';
-		char b = tB[i] - '0';
+		char num = input[i] - '0';
 
-		tempOut[i] = ((a ^ b) ^ carry) + '0';
+		results += num * poweroftwo;
 
-		carry = (a & b) || (carry & (a ^ b));
+		poweroftwo *= 2;
 
 	}
 
-	// Pushes result to output wire
-	output->SetWireData(tempOut);
+	results -= (input[0] * poweroftwo);
+
+	return results;
 
 }
+
+std::string Adder::IntTo32BitString(int input)
+{
+
+	std::string binary = "";
+
+	unsigned long long poweroftwo = 1;
+	int results = input;
+	for (int i = 1; i < 32; i++)
+	{
+
+		poweroftwo *= 2;
+
+	}
+
+	if (input < 0)
+	{
+
+		binary += '1';
+		results += poweroftwo;
+
+	}
+	else
+	{
+
+		binary += '0';
+
+	}
+
+	poweroftwo /= 2;
+
+	for (int i = 30; i >= 0; i--)
+	{
+
+		if (poweroftwo > results)
+		{
+
+			binary += '0';
+
+		}
+		else
+		{
+
+			binary += '1';
+			results -= poweroftwo;
+
+		}
+
+		poweroftwo /= 2;
+
+	}
+
+	return binary;
+
+}
+
 
 void Adder::ConnectInput1(Wire* wire)
 {

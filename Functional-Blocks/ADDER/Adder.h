@@ -29,6 +29,9 @@ private:
 	// Check if the size of the bus is correct and if the wires exist.
 	bool CheckConnection();
 
+	int StringToInt(std::string input);
+	std::string IntTo32BitString(int input);
+
 	// True if the program counter is configured correctly.
 	bool validConfig;
 
