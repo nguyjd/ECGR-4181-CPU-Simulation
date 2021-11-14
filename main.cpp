@@ -7,6 +7,7 @@
 #include "ShiftLeft.h"
 #include "RegisterFile.h"
 #include "ProgramCounter.h"
+#include "PipelineRegisters.h"
 
 
 int main()
@@ -209,6 +210,41 @@ int main()
 
 	std::cout << PCOutput->GetWireDataStr() << std::endl;
 
+	Wire* testWire1input = new Wire("00000000000000000000000000000011");
+	Wire* testWire2input = new Wire("00000000000000000000000000010000");
+	Wire* testWire1Output = new Wire(32);
+	Wire* testWire2Output = new Wire(32);
+
+	PipelineRegisters* PR = new PipelineRegisters(Clk);
+
+	if (PR->IsPRConfigValid())
+	{
+
+		std::cout << "The Pipeline Register is valid" << std::endl;
+
+	}
+
+	// Test with no inputs
+	PR->Update();
+
+	PR->ConnectInputAndOutputPair(testWire1input, testWire1Output);
+
+	PR->Update();
+
+	std::cout << testWire1Output->GetWireDataStr() << std::endl;
+	std::cout << testWire2Output->GetWireDataStr() << std::endl;
+
+	testWire1input->SetWireData("10000000000000000000000000000000");
+	PR->ConnectInputAndOutputPair(testWire2input, testWire2Output);
+
+	PR->Update();
+
+	std::cout << testWire1Output->GetWireDataStr() << std::endl;
+	std::cout << testWire2Output->GetWireDataStr() << std::endl;
+
+	testWire1input->SetWireData("00000000000000000000000000000000");
+
+
 	delete inputA;
 	delete inputB;
 	delete inputC;
@@ -239,6 +275,11 @@ int main()
 	delete PCOutput;
 	delete Clk;
 	delete PC;
+	delete testWire1input;
+	delete testWire2input;
+	delete testWire1Output;
+	delete testWire2Output;
+	delete PR;
 
 	return 0;
 

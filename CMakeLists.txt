@@ -15,6 +15,7 @@ add_executable(CPU
 	Functional-Blocks/SHIFT/ShiftLeft.cpp
 	Functional-Blocks/REGISTERFILE/RegisterFile.cpp
 	Functional-Blocks/PROGRAMCOUNTER/ProgramCounter.cpp
+	Functional-Blocks/PIPELINEREGISTERS/PipelineRegisters.cpp
 	Data-Handler/Event.cpp
 	Data-Handler/Instruction.cpp
 	Data-Handler/Data.cpp
@@ -31,4 +32,5 @@ target_include_directories(CPU PRIVATE
 	Functional-Blocks/SHIFT
 	Functional-Blocks/REGISTERFILE
 	Functional-Blocks/PROGRAMCOUNTER
+	Functional-Blocks/PIPELINEREGISTERS
 )

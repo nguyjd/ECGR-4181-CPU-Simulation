@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Functional-Blocks\PROGRAMCOUNTER\;$(ProjectDir)Functional-Blocks\REGISTERFILE\;$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Functional-Blocks\PIPELINEREGISTERS\;$(ProjectDir)Functional-Blocks\PROGRAMCOUNTER\;$(ProjectDir)Functional-Blocks\REGISTERFILE\;$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -152,6 +152,7 @@
     <ClCompile Include="Functional-Blocks\EXTEND\ZeroExtend.cpp" />
     <ClCompile Include="Functional-Blocks\MUX\Mux2to1.cpp" />
     <ClCompile Include="Functional-Blocks\MUX\Mux4to1.cpp" />
+    <ClCompile Include="Functional-Blocks\PIPELINEREGISTERS\PipelineRegisters.cpp" />
     <ClCompile Include="Functional-Blocks\PROGRAMCOUNTER\ProgramCounter.cpp" />
     <ClCompile Include="Functional-Blocks\REGISTERFILE\RegisterFile.cpp" />
     <ClCompile Include="Functional-Blocks\SHIFT\ShiftLeft.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Functional-Blocks\EXTEND\ZeroExtend.h" />
     <ClInclude Include="Functional-Blocks\MUX\Mux2to1.h" />
     <ClInclude Include="Functional-Blocks\MUX\Mux4to1.h" />
+    <ClInclude Include="Functional-Blocks\PIPELINEREGISTERS\PipelineRegisters.h" />
     <ClInclude Include="Functional-Blocks\PROGRAMCOUNTER\ProgramCounter.h" />
     <ClInclude Include="Functional-Blocks\REGISTERFILE\RegisterFile.h" />
     <ClInclude Include="Functional-Blocks\SHIFT\ShiftLeft.h" />
