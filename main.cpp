@@ -18,7 +18,7 @@ int main()
 
 	Adder *adda = new Adder(wIn1, wIn2, out1);
 	adda->Update();
-	std::cout << adda->OutputResult() << std::endl;
+	std::cout << out1->GetWireDataStr() << std::endl;
 
 	Wire* inputA = new Wire("00000000000000000000000000000001");
 	Wire* inputB = new Wire("00000000000000000000000000000011");

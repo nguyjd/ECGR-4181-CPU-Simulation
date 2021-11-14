@@ -7,6 +7,8 @@ Adder::Adder()
 	input2 = nullptr;
 	output = nullptr;
 
+	validConfig = CheckConnection();
+
 }
 
 Adder::Adder(Wire* inputA, Wire* inputB, Wire* out)
@@ -16,12 +18,7 @@ Adder::Adder(Wire* inputA, Wire* inputB, Wire* out)
 	input2 = inputB;
 	output = out;
 
-}
-
-std::string Adder::OutputResult()
-{
-
-	return output->GetWireDataStr();
+	validConfig = CheckConnection();
 
 }
 
@@ -52,9 +49,49 @@ void Adder::Update()
 
 }
 
+void Adder::ConnectInput1(Wire* wire)
+{
+
+	// Set the wire
+	input1 = wire;
+
+	// Check if the wire is valid.
+	validConfig = CheckConnection();
+
+}
+
+void Adder::ConnectInput2(Wire* wire)
+{
+
+	// Set the wire
+	input2 = wire;
+
+	// Check if the wire is valid.
+	validConfig = CheckConnection();
+
+}
+
+void Adder::ConnectOutput(Wire* wire)
+{
+
+	// Set the wire
+	output = wire;
+
+	// Check if the wire is valid.
+	validConfig = CheckConnection();
+
+}
+
 bool Adder::IsAdderConfigValid()
 {
 
+	return validConfig;
+
+}
+
+bool Adder::CheckConnection()
+{
+	
 	// Check if input wires exist
 	if (!input1 || !input2 || !output)
 	{
@@ -64,11 +101,27 @@ bool Adder::IsAdderConfigValid()
 	}
 
 	// Check if connection data is valid
-	if (!input1->IsWireDataValid() || !input2->IsWireDataValid() || !output->IsWireDataValid())
+	if (!input1->IsWireDataValid() || input1->GetAmountofWires() != DATASIZE)
 	{
 
 		return false;
 
 	}
+
+	if (!input2->IsWireDataValid() || input2->GetAmountofWires() != DATASIZE)
+	{
+
+		return false;
+
+	}
+
+	if (!output->IsWireDataValid() || output->GetAmountofWires() != DATASIZE)
+	{
+
+		return false;
+
+	}
+
+	return true;
 
 }
