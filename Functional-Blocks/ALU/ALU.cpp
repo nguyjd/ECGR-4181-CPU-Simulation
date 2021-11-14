@@ -69,7 +69,6 @@ void ALU::Update()
 	
 }
 
-
 int ALU::StringToInt(std::string input)
 {
 
@@ -149,7 +148,6 @@ std::string ALU::IntTo32BitString(int input)
 
 }
 
-
 void ALU::ADDalu()
 {
 
@@ -167,7 +165,6 @@ void ALU::ADDalu()
 	output->SetWireData(IntTo32BitString(results));
 
 }
-
 
 void ALU::SUBalu()
 {
@@ -256,7 +253,7 @@ void ALU::ConnectOutput(Wire* wire)
 
 }
 
-void ALU::ConnectOutputFlag(Wire* wire)
+void ALU::ConnectOutputBranch(Wire* wire)
 {
 
 	// Set the wire
