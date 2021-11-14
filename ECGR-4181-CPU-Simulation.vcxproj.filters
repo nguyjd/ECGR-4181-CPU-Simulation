@@ -48,6 +48,9 @@
     <ClCompile Include="Functional-Blocks\PIPELINEREGISTERS\PipelineRegisters.cpp">
       <Filter>Functional-Blocks\PIPELINEREGISTERS</Filter>
     </ClCompile>
+    <ClCompile Include="Functional-Blocks\MEMORY\Memory.cpp">
+      <Filter>Functional-Blocks\MEMORY</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
@@ -79,6 +82,9 @@
     </Filter>
     <Filter Include="Functional-Blocks\PIPELINEREGISTERS">
       <UniqueIdentifier>{59ab40d4-1328-4cf8-b76a-05e77e3052c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\MEMORY">
+      <UniqueIdentifier>{0d62a858-e95f-47bc-80a1-e1b6d10e30b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Functional-Blocks\PIPELINEREGISTERS\PipelineRegisters.h">
       <Filter>Functional-Blocks\PIPELINEREGISTERS</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\MEMORY\Memory.h">
+      <Filter>Functional-Blocks\MEMORY</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@
 #include "RegisterFile.h"
 #include "ProgramCounter.h"
 #include "PipelineRegisters.h"
+#include "Memory.h"
 
 
 int main()
@@ -244,6 +245,36 @@ int main()
 
 	testWire1input->SetWireData("00000000000000000000000000000000");
 
+	Wire* memSize = new Wire("00");
+	Wire* memRead = new Wire("1");
+	Wire* memWrite = new Wire("0");
+	Wire* dataIn = new Wire(32);
+	Wire* memAddress = new Wire(32);
+	Wire* outputEightBits = new Wire(8);
+	Wire* outputSixteenBits = new Wire(16);
+	Wire* outputThirtyTwoBits = new Wire(32);
+
+	Memory* ram = new Memory(memSize, memRead, memWrite, dataIn, memAddress, outputEightBits, outputSixteenBits, outputThirtyTwoBits);
+
+	memSize->SetWireData("10");
+	memWrite->SetWireData("1");
+	dataIn->SetWireData("10000010000001100000000111100001");
+
+	memAddress->SetWireData("00000000000000000000000000000001");
+
+	ram->Update();
+
+	memAddress->SetWireData("00000000000000000000000000000000");
+	memWrite->SetWireData("0");
+	memRead->SetWireData("1");
+
+	ram->Update();
+
+	std::cout << outputEightBits->GetWireDataStr() << std::endl;
+	std::cout << outputSixteenBits->GetWireDataStr() << std::endl;
+	std::cout << outputThirtyTwoBits->GetWireDataStr() << std::endl;
+
+
 
 	delete inputA;
 	delete inputB;
@@ -280,6 +311,15 @@ int main()
 	delete testWire1Output;
 	delete testWire2Output;
 	delete PR;
+	delete memSize;
+	delete memRead;
+	delete memWrite;
+	delete dataIn;
+	delete memAddress;
+	delete outputEightBits;
+	delete outputSixteenBits;
+	delete outputThirtyTwoBits;
+	delete ram;
 
 	return 0;
 
