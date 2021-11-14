@@ -7,7 +7,7 @@ ALU::ALU()
 	input2 = nullptr;
 	output = nullptr;
 	ALUOp = nullptr;
-	outputFlag = nullptr;
+	outputBranch = nullptr;
 
 	validConfig = CheckConnection();
 
@@ -20,7 +20,7 @@ ALU::ALU(Wire* inputA, Wire* inputB, Wire* inputALUOp, Wire* out, Wire* outFlag)
 	input2 = inputB;
 	output = out;
 	ALUOp = inputALUOp;
-	outputFlag = outFlag;
+	outputBranch = outFlag;
 
 	validConfig = CheckConnection();
 
@@ -29,36 +29,124 @@ ALU::ALU(Wire* inputA, Wire* inputB, Wire* inputALUOp, Wire* out, Wire* outFlag)
 void ALU::Update() 
 {
 
-	if ((ALUOp->GetWireDataStr()) == "00000")
+	if (ALUOp->GetWireDataStr().compare("00000") == 0)
 	{
+	
 		ADDalu();
+	
 	}
-	else if ((ALUOp->GetWireDataStr()) == "00001")
+	
+	if (ALUOp->GetWireDataStr().compare("00001") == 0)
 	{
+
 		SUBalu();
+	
+	}
+
+	// Load
+	if (ALUOp->GetWireDataStr().compare("01111") == 0)
+	{
+
+		ADDalu();
+
+	}
+
+	// Store
+	if (ALUOp->GetWireDataStr().compare("11011") == 0)
+	{
+
+		ADDalu();
+
+	}
+
+	// BNE
+	if (ALUOp->GetWireDataStr().compare("10110") == 0)
+	{
+
+		BNEalu();
+
 	}
 	
 }
 
 
-int StringToInt(std::string input)
+int ALU::StringToInt(std::string input)
 {
-	return std::stoi(input, nullptr, 2);
+
+	int poweroftwo = 1;
+	int results = 0;
+	
+	// Up to MSB
+	for (int i = input.size() - 1; i > 0; i--)
+	{
+
+		char num = input[i] - '0';
+
+		results += num * poweroftwo;
+
+		poweroftwo *= 2;
+
+	}
+
+	results -= (input[0] * poweroftwo);
+
+	return results;
+
 }
 
-std::string IntTo32BitString(int input) 
+std::string ALU::IntTo32BitString(int input)
 {
+
 	std::string binary = "";
-	int bitmask = 1;
-	for (int i = 0; i < 31; i++)
+
+	unsigned long long poweroftwo = 1;
+	int results = input;
+	for (int i = 1; i < 32; i++)
 	{
-		if ((bitmask & input) >= 1)
-			binary = "1" + binary;
-		else
-			binary = "0" + binary;
-		bitmask <<= 1;
+
+		poweroftwo *= 2;
+
 	}
+
+	if (input < 0)
+	{
+
+		binary += '1';
+		results += poweroftwo;
+
+	}
+	else
+	{
+
+		binary += '0';
+
+	}
+
+	poweroftwo /= 2;
+
+	for (int i = 30; i >= 0; i--)
+	{
+
+		if (poweroftwo > results)
+		{
+
+			binary += '0';
+
+		}
+		else
+		{
+
+			binary += '1';
+			results -= poweroftwo;
+
+		}
+
+		poweroftwo /= 2;
+
+	}
+
 	return binary;
+
 }
 
 
@@ -69,21 +157,14 @@ void ALU::ADDalu()
 	std::string tempOut = "00000000000000000000000000000000";
 	char carry = 0;
 
-	// Bitwise full-adder logic 
-	for (int i = 31; i >= 0; i--)
-	{
+	//Stores int equivalent of inputs
+	int i_input1 = StringToInt(input1->GetWireDataStr());
+	int i_input2 = StringToInt(input2->GetWireDataStr());
 
-		char a = input1->GetWireDataStr()[i] - '0';
-		char b = input2->GetWireDataStr()[i] - '0';
-
-		tempOut[i] = ((a ^ b) ^ carry) + '0';
-
-		carry = (a & b) || (carry & (a ^ b));
-
-	}
+	int results = i_input1 + i_input2;
 
 	// Pushes result to output wire
-	output->SetWireData(tempOut);
+	output->SetWireData(IntTo32BitString(results));
 
 }
 
@@ -100,7 +181,7 @@ void ALU::SUBalu()
 	int i_input1 = StringToInt(input1->GetWireDataStr());
 	int i_input2 = StringToInt(input2->GetWireDataStr());
 
-	int i_tempOut = i_input2 - i_input1;
+	i_tempOut = i_input2 - i_input1;
 
 	tempOut = IntTo32BitString(i_tempOut);
 
@@ -110,7 +191,26 @@ void ALU::SUBalu()
 
 }
 
+void ALU::BNEalu()
+{
 
+	int i_input1 = StringToInt(input1->GetWireDataStr());
+	int i_input2 = StringToInt(input2->GetWireDataStr());
+
+	if (i_input1 != i_input2)
+	{
+
+		outputBranch->SetWireData("1");
+
+	}
+	else
+	{
+
+		outputBranch->SetWireData("0");
+
+	}
+
+}
 
 void ALU::ConnectInput1(Wire* wire)
 {

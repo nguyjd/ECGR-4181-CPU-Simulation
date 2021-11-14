@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Functional-Blocks\MEMORY\;$(ProjectDir)Functional-Blocks\PIPELINEREGISTERS\;$(ProjectDir)Functional-Blocks\PROGRAMCOUNTER\;$(ProjectDir)Functional-Blocks\REGISTERFILE\;$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Functional-Blocks\ALU\;$(ProjectDir)Functional-Blocks\MEMORY\;$(ProjectDir)Functional-Blocks\PIPELINEREGISTERS\;$(ProjectDir)Functional-Blocks\PROGRAMCOUNTER\;$(ProjectDir)Functional-Blocks\REGISTERFILE\;$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
