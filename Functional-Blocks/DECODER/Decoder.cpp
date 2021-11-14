@@ -21,6 +21,7 @@ Decoder::Decoder()
 	memSize = nullptr;
 	jump = nullptr;
 	aui = nullptr;
+	jalr = nullptr;
 
 	validState = false;
 
@@ -47,6 +48,7 @@ Decoder::Decoder(Instruction inst)
 	memSize = nullptr;
 	jump = nullptr;
 	aui = nullptr;
+	jalr = nullptr;
 
 	validState = false;
 
@@ -1003,6 +1005,34 @@ void Decoder::DecodeInstruction()
 
 		validState = true;
 		assemblyInst = "JALR";
+
+	}
+
+	// NO OP
+	if (opcode.compare("1111111") == 0)
+	{
+
+		immi->SetWireData("000000000000");
+		readReg1->SetWireData("00000");
+		writeEnable->SetWireData("0");
+		writeReg->SetWireData("00000");
+		writeSel->SetWireData("0");
+		jump->SetWireData("0");
+		jalr->SetWireData("0");
+		sign->SetWireData("0");
+		readReg2->SetWireData("00000");
+		immi2->SetWireData("00000000000000000000");
+		ALUSrc->SetWireData("0");
+		ALUop->SetWireData("00000");
+		ALUdataSel->SetWireData("0");
+		flagControl->SetWireData("000");
+		offset->SetWireData("0000000000000");
+		memRead->SetWireData("0");
+		memWrite->SetWireData("0");
+		memSize->SetWireData("00");
+
+		validState = true;
+		assemblyInst = "NOOP";
 
 	}
 
