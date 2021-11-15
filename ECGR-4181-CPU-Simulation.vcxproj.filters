@@ -6,9 +6,6 @@
     <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp">
       <Filter>Functional-Blocks\DECODER</Filter>
     </ClCompile>
-    <ClCompile Include="Data-Handler\Event.cpp">
-      <Filter>Data-Handler</Filter>
-    </ClCompile>
     <ClCompile Include="Data-Handler\Instruction.cpp">
       <Filter>Data-Handler</Filter>
     </ClCompile>

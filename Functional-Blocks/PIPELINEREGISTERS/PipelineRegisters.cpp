@@ -36,7 +36,7 @@ void PipelineRegisters::ConnectInputAndOutputPair(Wire* input, Wire* output)
 	inputWires.push_back(input);
 	outputWires.push_back(output);
 
-	registers.push_back(new Data());
+	registers.push_back(new Wire(input->GetWireDataStr().size()));
 
 }
 
@@ -62,13 +62,13 @@ void PipelineRegisters::Update()
 		for (unsigned long long i = 0; i < registers.size(); i++)
 		{
 
-			registers[i]->SetData(inputWires[i]->GetWireDataStr());
+			registers[i]->SetWireData(inputWires[i]->GetWireDataStr());
 
 			// If the clk is high. The program counter is active high.
 			if (clkWire->GetWireDataStr().compare("1") == 0)
 			{
 
-				outputWires[i]->SetWireData(registers[i]->GetDataStr());
+				outputWires[i]->SetWireData(registers[i]->GetWireDataStr());
 
 			}
 
@@ -109,7 +109,7 @@ bool PipelineRegisters::CheckConnection()
 		if (inputWires[i])
 		{
 
-			if (!inputWires[i]->IsWireDataValid() || inputWires[i]->GetAmountofWires() != DATASIZE)
+			if (!inputWires[i]->IsWireDataValid())
 			{
 
 				return false;
@@ -132,7 +132,7 @@ bool PipelineRegisters::CheckConnection()
 		if (outputWires[i])
 		{
 
-			if (!outputWires[i]->IsWireDataValid() || outputWires[i]->GetAmountofWires() != DATASIZE)
+			if (!outputWires[i]->IsWireDataValid())
 			{
 
 				return false;
@@ -155,9 +155,9 @@ bool PipelineRegisters::CheckConnection()
 		if (registers[i])
 		{
 
-			if (!registers[i]->IsDataValid())
+			if (!registers[i]->IsWireDataValid())
 			{
-
+				
 				return false;
 
 			}

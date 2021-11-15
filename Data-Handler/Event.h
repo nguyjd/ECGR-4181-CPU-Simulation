@@ -2,22 +2,23 @@
 #define __EVENT_H__
 
 #include <time.h>
+#include <string>
 
 class Event
 {
 
 public:
 
-	Event() : systemTime(0), randomInteger(0) {}
-	Event(time_t time, int number) : systemTime(time), randomInteger(number) {}
+	Event() : systemTime(0), inst(0) {}
+	Event(time_t time, std::string number) : systemTime(time), inst(number) {}
 
 	time_t GetTime() { return systemTime; };
-	int GetInteger() { return randomInteger; };
+	std::string GetString() { return inst; };
 
 private:
 
 	time_t systemTime;
-	int randomInteger;
+	std::string inst;
 	
 
 };

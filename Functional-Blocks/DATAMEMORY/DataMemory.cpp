@@ -14,8 +14,8 @@ DataMemory::DataMemory()
 
 	for (unsigned long long i = 0; i < MEMORYSIZE; i++)
 	{
-
-		ram.push_back(new Wire(8));
+		
+		ram.push_back(new Wire("10101010"));
 
 	}
 
@@ -38,7 +38,7 @@ DataMemory::DataMemory(Wire* size, Wire* read, Wire* write, Wire* inputdata, Wir
 	for (unsigned long long i = 0; i < MEMORYSIZE; i++)
 	{
 
-		ram.push_back(new Wire(8));
+		ram.push_back(new Wire("10101010"));
 
 	}
 

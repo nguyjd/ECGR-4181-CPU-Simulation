@@ -31,7 +31,7 @@ public:
 
 private:
 
-	const unsigned long long MEMORYSIZE = 10000;
+	const unsigned long long MEMORYSIZE = 30;
 
 	// Check if the size of the bus is correct and if the wires exist.
 	bool CheckConnection();

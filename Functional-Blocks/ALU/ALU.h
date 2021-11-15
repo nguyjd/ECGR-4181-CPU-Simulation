@@ -24,6 +24,8 @@ public:
 	void Update();
 	bool IsAdderConfigValid();
 
+	void CheckBranch();
+
 private:
 
 	const char DATASIZE = 32;

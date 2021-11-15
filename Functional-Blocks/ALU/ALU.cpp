@@ -209,6 +209,19 @@ void ALU::BNEalu()
 
 }
 
+void ALU::CheckBranch()
+{
+
+	// INVERTER
+	if (outputBranch->GetWireDataStr().compare("1") == 0)
+	{
+
+		outputBranch->SetWireData("0");
+
+	}
+
+}
+
 void ALU::ConnectInput1(Wire* wire)
 {
 

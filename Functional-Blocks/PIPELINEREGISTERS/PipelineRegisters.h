@@ -34,7 +34,7 @@ private:
 	bool validConfig;
 
 	// The datas are linked by index.
-	std::vector<Data*> registers;
+	std::vector<Wire*> registers;
 	std::vector<Wire*> inputWires;
 	std::vector<Wire*> outputWires;
 

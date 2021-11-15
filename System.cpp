@@ -25,36 +25,11 @@ void System::PrintMEQ()
 	for (auto event : MEQ)
 	{
 
-		std::cout << "T: " << event->GetTime() << " | V: " << event->GetInteger() << std::endl;
+		std::cout << "T: " << event->GetTime() << " | V: " << event->GetString() << std::endl;
 
 	}
 
 	std::cout << "-------------------------------" << std::endl;
-
-}
-
-void System::GenerateEvents(int eventCount)
-{
-
-	// Generate the Events based on the amount of events given.
-	for (int i = 0; i < eventCount; i++)
-	{
-
-		// Get the current time.
-		time_t seconds = time(0);
-
-		GenerateEvent(seconds, rand());
-
-		// Delay for one second.
-		time_t currentTime = time(0);
-		while (seconds == currentTime)
-		{
-
-			currentTime = time(0);
-
-		}
-
-	}
 
 }
 
@@ -63,16 +38,6 @@ void System::ReadEvent()
 
 	// Get the pointer on top of the stack.
 	Event* event = MEQ.front();
-
-	// Store the values of the event.
-	time_t newTime = event->GetTime() + rand();
-	int integer = event->GetInteger();
-
-	// Print out the integer from the event.
-	std::cout << "V: " << integer << std::endl;
-
-	// Make a new event.
-	GenerateEvent(newTime, integer);
 
 	// Delete the old event.
 	MEQ.erase(MEQ.begin());
@@ -86,11 +51,11 @@ int System::GetNumEventProcessed()
 	return eventProcessed;
 }
 
-void System::GenerateEvent(time_t time, int integer)
+void System::GenerateEvent(std::string instuction)
 {
 
 	// Create a new event.
-	Event* event = new Event(time, integer);
+	Event* event = new Event(time(0), instuction);
 	SortAndInsertMEQ(event);
 
 

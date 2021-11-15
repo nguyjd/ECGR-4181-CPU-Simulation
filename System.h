@@ -19,9 +19,6 @@ public:
 	// Print out the contents of the MEQ
 	void PrintMEQ();
 	
-	// Create multiple events
-	void GenerateEvents(int eventCount);
-	
 	// Process the event.
 	void ReadEvent();
 
@@ -30,7 +27,7 @@ public:
 private:
 
 	// Helper function to create the events.
-	void GenerateEvent(time_t time, int integer);
+	void GenerateEvent(std::string instuction);
 	
 	// Inserts the events and sorts the vector.
 	void SortAndInsertMEQ(Event* event);

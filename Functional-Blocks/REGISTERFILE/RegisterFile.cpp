@@ -20,6 +20,12 @@ RegisterFile::RegisterFile()
 
 	}
 
+
+	// For assignment
+	registers[2]->SetData("00000000000000000000000000010100");
+	// For assignment
+	registers[3]->SetData("00000000000000000000000000000010");
+
 	validConfig = CheckConnection();
 
 }
@@ -43,6 +49,11 @@ RegisterFile::RegisterFile(Wire* regOneInput, Wire* regTwoInput, Wire* outputOne
 		registers.push_back(new Data());
 
 	}
+
+	// For assignment
+	registers[2]->SetData("00000000000000000000000000010100");
+	// For assignment
+	registers[3]->SetData("00000000000000000000000000000000");
 
 	validConfig = CheckConnection();
 
@@ -192,6 +203,7 @@ void RegisterFile::Update()
 
 		// Hard wire the X0 to be all zeros
 		registers[0]->SetData("00000000000000000000000000000000");
+
 
 	}
 	else
