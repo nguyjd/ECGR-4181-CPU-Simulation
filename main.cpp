@@ -23,6 +23,8 @@ int BinToIndex(std::string input);
 int main()
 {
 
+	System* MEQ = new System();
+
 	Wire* CLK = new Wire(1);
 
 	// ---------------------------IF WIRES----------------------------------------
@@ -53,7 +55,7 @@ int main()
 	Wire* readReg1 = new Wire(5);
 	Wire* readReg2 = new Wire(5);
 	
-		// Decoder Values
+	// Decoder Values
 	Wire* jump_ID = new Wire(1);
 	Wire* aui_ID = new Wire(1);
 	Wire* branchOffset13bit_ID = new Wire(13);
@@ -102,7 +104,6 @@ int main()
 	// ---------------------------STORE Wires (MEM/WB)------------------------------------------------------------
 
 	Wire* ALUoutput_WB = new Wire(32);
-
 	Wire* LUIWire = new Wire(32);
 	Wire* JALWire = new Wire(32);
 
@@ -123,19 +124,10 @@ int main()
 
 
 	//-----------------------------IF Components---------------------------------------
-
-	// Processor Blocks
 	Adder* PCadder = new Adder(pcOut, Mux1Output, pcIn);
 	Mux2to1* branchMux = new Mux2to1(Four, offsetSignedEx, branchSignal, Mux1Output);
 	ProgramCounter* PC = new ProgramCounter(pcIn, pcOut, CLK);
-
 	SignExtend* sign = new SignExtend(branchOffset13bit_IF, offsetSignedEx);
-
-	// TODO: Convert pcOut to a indexalbe value to get the instruction
-	
-	//Adder* adder2 = new Adder();
-	//ShiftLeft* shift12 = new ShiftLeft();
-	//Mux2to1* auiMux = new Mux2to1();
 
 
 	PipelineRegisters* IFID = new PipelineRegisters();
@@ -145,8 +137,6 @@ int main()
 
 
 	//-----------------------------ID Components---------------------------------------
-
-	//TODO: Connect all the wires to the decoder.
 	Decoder* decode = new Decoder();
 
 	decode->ConnectALUdataSel(dataSel_ID);
@@ -171,9 +161,7 @@ int main()
 
 	RegisterFile* reg = new RegisterFile(readReg1, readReg2, reg1_ID, reg2_ID, writeEnable, writeReg, writeData_ID);
 	SignExtend* immiSignedEx = new SignExtend(immediateDecOut, immediateSignExtended);
-
 	Mux2to1* inputBMux = new Mux2to1(reg2_ID, immediateSignExtended, ALUSrc, inputB_ID);
-
 	PipelineRegisters* IDEX = new PipelineRegisters();
 
 	IDEX->ConnectCLK(CLK);
@@ -191,7 +179,6 @@ int main()
 
 	ALU* alu = new ALU(reg1_EX, inputB_EX, aluOp_EX, ALUoutput, branchSignal);
 	
-
 	PipelineRegisters* EXWB = new PipelineRegisters();
 	EXWB->ConnectCLK(CLK);
 	EXWB->ConnectInputAndOutputPair(ToReg, ALUoutput_WB);
@@ -204,9 +191,7 @@ int main()
 
 
 	//-----------------------------MEM/WB Components---------------------------------------
-
 	DataMemory* ram = new DataMemory(memSize, memRead, memWrite, dataIn, memAddress, outputEightBits, outputSixteenBits, outputThirtyTwoBits);
-	
 	Mux4to1* dataWriteMux = new Mux4to1(ALUoutput_WB, outputThirtyTwoBits, LUIWire, JALWire, writeSel_wb, writeData_ID);
 
 
@@ -217,40 +202,36 @@ int main()
 
 	CLK->SetWireData("1");
 
+	std::string instructionName_IF = "";
+	std::string instructionName_ID = "";
+	std::string instructionName_EX = "";
+	std::string instructionName_WB = "";
+
 	unsigned long long int clockCount = 0;
+	bool delay = true;
+
 	// Main loop
 	while (true)
 	{
 
 		time_t seconds = time(0);
 
+		// Shift Pipeline regsisters
 		IFID->Update();
 		IDEX->Update();
 		EXWB->Update();
 
+		// Update instuction name
+		instructionName_WB = instructionName_EX;
+		instructionName_EX = instructionName_ID;
+		instructionName_ID = instructionName_IF;
+		
 
+		//------------------------------INSTRUCTION FETCH--------------------------//
 		PC->Update();
 		index = BinToIndex(pcOut->GetWireDataStr()) / 4;
 		sign->Update();
 		branchMux->Update();
-
-
-		std::cout << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "INSTRUCTION FETCH STAGE" << std::endl;
-		std::cout << "Instuction Name: \t" << instructionsNames[index] << std::endl;
-		std::cout << "PC: \t\t" << pcOut->GetWireDataStr() << std::endl;
-		std::cout << "Current Clock Cycle: \t" << clockCount<< std::endl;
-		
-
-		std::cout << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
-		std::cout << std::endl;
-
 		PCadder->Update();
 
 
@@ -259,33 +240,53 @@ int main()
 		{
 
 			instruction_IF->SetWireData(instructionsBin[index]);
+			instructionName_IF = instructionsNames[index];
+			MEQ->GenerateEvent(instructionName_IF);
+
 
 		}
+		
 
 
-		// ID
+		std::cout << "*--------------------------------------------------------------------------------------------------------------*" << std::endl;
+		std::cout << "INSTRUCTION FETCH STAGE" << std::endl;
+		std::cout << "Instuction Name: \t" << instructionName_IF << std::endl;
+		std::cout << "PC: \t\t\t" << pcOut->GetWireDataStr() << std::endl;
+		std::cout << "Current Clock Cycle: \t" << clockCount << std::endl;
+		std::cout << "*--------------------------------------------------------------------------------------------------------------*" << std::endl;
 
+		std::cout << std::endl;
+		std::cout << std::endl;
+
+		//------------------------------INSTRUCTION FETCH--------------------------//
+
+		//------------------------------INSTRUCTION DECODER--------------------------//
 		decode->NextInstruction(instruction_ID->GetWireDataStr());
-		decode->PrintAssembly();
-		decode->PrintControlLines();
-
 		reg->Update();
-		reg->PrintRegisters();
 		immiSignedEx->Update();
 		inputBMux->Update();
 
+		std::cout << "*--------------------------------------------------------------------------------------------------------------*" << std::endl;
+		std::cout << "INSTRUCTION DECODE STAGE" << std::endl;
+		std::cout << "Instuction Name: \t" << instructionName_ID << std::endl;
+		decode->PrintControlLines();
+		std::cout << std::endl;
+		reg->PrintRegisters();
+		std::cout << "Current Clock Cycle: \t" << clockCount << std::endl;
+		std::cout << "*--------------------------------------------------------------------------------------------------------------*" << std::endl;
 
-		//EX
+		std::cout << std::endl;
+		std::cout << std::endl;
+		//------------------------------INSTRUCTION DECODER--------------------------//
+
+		//------------------------------INSTRUCTION EXECUTE--------------------------//
 		alu->Update();
-
 		sign->Update();
 		branchMux->Update();
-
 		PCadder->Update();
-
 		alu->CheckBranch();
 
-
+		// Backward mux
 		if (dataSel_EX->GetWireDataStr().compare("0") == 0)
 		{
 
@@ -299,26 +300,158 @@ int main()
 
 		}
 
+		std::cout << "*--------------------------------------------------------------------------------------------------------------*" << std::endl;
+		std::cout << "INSTRUCTION EXECUTE STAGE" << std::endl;
+		std::cout << "Instuction Name: \t" << instructionName_EX << std::endl;
+		std::cout << "ALU INPUT A: \t" << reg1_EX->GetWireDataStr() << std::endl;
+		std::cout << "ALU INPUT B: \t" << inputB_EX->GetWireDataStr() << std::endl;
+		std::cout << "ALU OP CODE: \t" << aluOp_EX->GetWireDataStr() << std::endl;
+		std::cout << "ALU OUTPUT: \t" << ALUoutput->GetWireDataStr() << std::endl;
+		std::cout << "BRANCH: \t" << branchSignal->GetWireDataStr() << std::endl;
+		std::cout << "Current Clock Cycle: \t" << clockCount << std::endl;
+		std::cout << "*--------------------------------------------------------------------------------------------------------------*" << std::endl;
 
-		//WB
+		std::cout << std::endl;
+		std::cout << std::endl;
+
+		//------------------------------INSTRUCTION EXECUTE--------------------------//
+
+
+
+		//------------------------------INSTRUCTION WRITE BACK--------------------------//
 		ram->Update();
-		ram->PrintMemory();
+		
 		dataWriteMux->Update();
-		std::cout << branchSignal->GetWireDataStr() << std::endl;
 		
 
-		// Delay for one second.
-		time_t currentTime = time(0);
-		while (seconds == currentTime)
+		std::cout << "*--------------------------------------------------------------------------------------------------------------*" << std::endl;
+		std::cout << "INSTRUCTION WRITE BACK STAGE" << std::endl;
+		std::cout << "Instuction Name: \t" << instructionName_WB << std::endl;
+		std::cout << std::endl;
+		ram->PrintMemory();
+		std::cout << std::endl;
+		std::cout << "WRITE BACK DATA: \t" << writeData_ID->GetWireDataStr() << std::endl;
+		std::cout << "Current Clock Cycle: \t" << clockCount << std::endl;
+		std::cout << "*--------------------------------------------------------------------------------------------------------------*" << std::endl;
+		//------------------------------INSTRUCTION WRITE BACK--------------------------//
+
+
+		// Print Event list
+		MEQ->PrintMEQ();
+
+		if (clockCount >= 4)
 		{
 
-			currentTime = time(0);
+			std::cout << "Completed: " << MEQ->ReadEvent() << std::endl;
+
+		}
+
+
+		// Delay for one second.
+		if (delay)
+		{
+
+			time_t currentTime = time(0);
+			while (seconds == currentTime)
+			{
+
+				currentTime = time(0);
+
+			}
+
 
 		}
 
 		clockCount++;
 
+		std::cout << std::endl;
+		std::cout << std::endl; 
+		std::cout << std::endl;
+		std::cout << std::endl;
+
 	}
+
+
+	delete CLK;
+	delete pcOut;
+	delete pcIn;
+	delete Four;
+	delete offsetSignedEx;
+	delete branch_IF;
+	delete Mux1Output;
+	delete pcOutAdderResult;
+	delete jump_IF;
+	delete aui_IF;
+	delete branchOffset13bit_IF;
+	delete jalrMuxResult_IF;
+	delete instruction_IF;
+	delete jalr;
+	delete writeSel_ID ;
+	delete writeReg;
+	delete writeData_ID;
+	delete writeEnable;
+	delete readReg1;
+	delete readReg2;
+	delete jump_ID;
+	delete aui_ID;
+	delete branchOffset13bit_ID;
+	delete memSize_ID;
+	delete memWrite_ID;
+	delete memRead_ID;
+	delete Signed_ID;
+	delete dataSel;
+	delete aluOp_ID;
+	delete dataSel_ID;
+	delete ALUSrc;
+	delete immi20BitSmile;
+	delete immediateDecOut;
+	delete immediateSignExtended;
+	delete reg1_ID;
+	delete reg2_ID;
+	delete inputB_ID;
+	delete instruction_ID;
+	delete flag;
+	delete aluOp_EX;
+	delete dataSel_EX;
+	delete writeSel_EX;
+	delete Signed_EX;
+	delete ALUoutput;
+	delete branchSignal;
+	delete inputB_EX;
+	delete reg1_EX;
+	delete reg2_EX;
+	delete ToReg;
+	delete ToMem;
+	delete memWrite_EX;
+	delete memRead_EX;
+	delete memSize_EX;
+	delete ALUoutput_WB;
+	delete LUIWire;
+	delete JALWire;
+	delete memSize;
+	delete memRead;
+	delete memWrite;
+	delete dataIn;
+	delete memAddress;
+	delete outputEightBits;
+	delete outputSixteenBits;
+	delete outputThirtyTwoBits;
+	delete regData_wb;
+	delete writeSel_wb;
+	delete PCadder;
+	delete branchMux;
+	delete PC;
+	delete sign;
+	delete IFID;
+	delete decode;
+	delete reg;
+	delete immiSignedEx;
+	delete inputBMux;
+	delete IDEX;
+	delete alu;
+	delete EXWB;
+	delete ram;
+	delete dataWriteMux;
 
 	return 0;
 

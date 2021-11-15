@@ -33,16 +33,27 @@ void System::PrintMEQ()
 
 }
 
-void System::ReadEvent()
+std::string System::ReadEvent()
 {
 
 	// Get the pointer on top of the stack.
-	Event* event = MEQ.front();
+	if (!MEQ.empty())
+	{
 
-	// Delete the old event.
-	MEQ.erase(MEQ.begin());
-	delete event;
-	eventProcessed++;
+		Event* event = MEQ.front();
+		std::string eventName = event->GetString();
+
+
+		// Delete the old event.
+		MEQ.erase(MEQ.begin());
+		delete event;
+		eventProcessed++;
+
+		return eventName;
+
+	}
+
+	return "";
 
 }
 

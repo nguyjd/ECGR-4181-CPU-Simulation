@@ -20,15 +20,16 @@ public:
 	void PrintMEQ();
 	
 	// Process the event.
-	void ReadEvent();
+	std::string ReadEvent();
 
 	int GetNumEventProcessed();
 
-private:
-
 	// Helper function to create the events.
 	void GenerateEvent(std::string instuction);
-	
+
+
+private:
+
 	// Inserts the events and sorts the vector.
 	void SortAndInsertMEQ(Event* event);
 

@@ -79,7 +79,7 @@ void PipelineRegisters::Update()
 	{
 
 		// Let the dev know that the something is wrong.
-		std::cout << "One of the pipeline registers is misconfigured or some data was invalid" << std::endl;
+		//std::cout << "One of the pipeline registers is misconfigured or some data was invalid" << std::endl;
 
 	}
 
