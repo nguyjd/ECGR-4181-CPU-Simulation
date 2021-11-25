@@ -3,55 +3,54 @@
 Decoder::Decoder()
 {
 
-	validState = false;
-	
-    // Default Values
-	readReg1 = "00000";
-	readReg2 = "00000";
-	writeEnable = false;
-	writeReg = "00000";
-	writeSel = "00";
-	immi = "000000000000";
-	immi2 = "00000000000000000000";
-	ALUSrc = false;
-	sign = false;
-	ALUop = "00000";
-	ALUdataSel = false;
-	flagControl = "000";
-	offset = "0000000000000";
-	memRead = false;
-	memWrite = false;
-	memSize = "00";
-	jump = false;
-	aui = false;
+	readReg1 = nullptr;
+	readReg2 = nullptr;
+	writeEnable = nullptr;
+	writeReg = nullptr;
+	writeSel = nullptr;
+	immi = nullptr;
+	immi2 = nullptr;
+	ALUSrc = nullptr;
+	sign = nullptr;
+	ALUop = nullptr;
+	ALUdataSel = nullptr;
+	flagControl = nullptr;
+	offset = nullptr;
+	memRead = nullptr;
+	memWrite = nullptr;
+	memSize = nullptr;
+	jump = nullptr;
+	aui = nullptr;
+	jalr = nullptr;
 
+	validState = false;
 
 }
 
 Decoder::Decoder(Instruction inst)
 {
 
+	readReg1 = nullptr;
+	readReg2 = nullptr;
+	writeEnable = nullptr;
+	writeReg = nullptr;
+	writeSel = nullptr;
+	immi = nullptr;
+	immi2 = nullptr;
+	ALUSrc = nullptr;
+	sign = nullptr;
+	ALUop = nullptr;
+	ALUdataSel = nullptr;
+	flagControl = nullptr;
+	offset = nullptr;
+	memRead = nullptr;
+	memWrite = nullptr;
+	memSize = nullptr;
+	jump = nullptr;
+	aui = nullptr;
+	jalr = nullptr;
+
 	validState = false;
-	
-    // Default Values
-	readReg1 = "00000";
-	readReg2 = "00000";
-	writeEnable = false;
-	writeReg = "00000";
-	writeSel = "00";
-	immi = "000000000000";
-	immi2 = "00000000000000000000";
-	ALUSrc = false;
-	sign = false;
-	ALUop = "00000";
-	ALUdataSel = false;
-	flagControl = "000";
-	offset = "0000000000000";
-	memRead = false;
-	memWrite = false;
-	memSize = "00";
-	jump = false;
-	aui = false;
 
     // Check the string is valid. If we dont, we can have array access errors.
 	if (inst.IsInstructionValid())
@@ -68,24 +67,24 @@ void Decoder::PrintControlLines()
 {
 
 	std::cout << "-----------------------------Control Signals---------------------------------------" << std::endl;
-	std::cout << "readReg1: " << readReg1 << std::endl;
-	std::cout << "readReg2: " << readReg2 << std::endl;
-	std::cout << "writeEnable: " << writeEnable << std::endl;
-	std::cout << "writeReg: " << writeReg << std::endl;
-	std::cout << "writeSel: " << writeSel << std::endl;
-	std::cout << "immi: " << immi << std::endl;
-	std::cout << "immi2: " << immi2 << std::endl;
-	std::cout << "ALUSrc: " << ALUSrc << std::endl;
-	std::cout << "sign: " << sign << std::endl;
-	std::cout << "ALUop: " << ALUop << std::endl;
-	std::cout << "ALUdataSel: " << ALUdataSel << std::endl;
-	std::cout << "flagControl: " << flagControl << std::endl;
-	std::cout << "offset: " << offset << std::endl;
-	std::cout << "memRead: " << memRead << std::endl;
-	std::cout << "memWrite: " << memWrite << std::endl;
-	std::cout << "memSize: " << memSize << std::endl;
-	std::cout << "jump: " << jump << std::endl;
-	std::cout << "aui: " << aui << std::endl;
+	std::cout << "readReg1: " << readReg1->GetWireDataStr() << std::endl;
+	std::cout << "readReg2: " << readReg2->GetWireDataStr() << std::endl;
+	std::cout << "writeEnable: " << writeEnable->GetWireDataStr() << std::endl;
+	std::cout << "writeReg: " << writeReg->GetWireDataStr() << std::endl;
+	std::cout << "writeSel: " << writeSel->GetWireDataStr() << std::endl;
+	std::cout << "immi: " << immi->GetWireDataStr() << std::endl;
+	std::cout << "immi2: " << immi2->GetWireDataStr() << std::endl;
+	std::cout << "ALUSrc: " << ALUSrc->GetWireDataStr() << std::endl;
+	std::cout << "sign: " << sign->GetWireDataStr() << std::endl;
+	std::cout << "ALUop: " << ALUop->GetWireDataStr() << std::endl;
+	std::cout << "ALUdataSel: " << ALUdataSel->GetWireDataStr() << std::endl;
+	std::cout << "flagControl: " << flagControl->GetWireDataStr() << std::endl;
+	std::cout << "offset: " << offset->GetWireDataStr() << std::endl;
+	std::cout << "memRead: " << memRead->GetWireDataStr() << std::endl;
+	std::cout << "memWrite: " << memWrite->GetWireDataStr() << std::endl;
+	std::cout << "memSize: " << memSize->GetWireDataStr() << std::endl;
+	std::cout << "jump: " << jump->GetWireDataStr() << std::endl;
+	std::cout << "aui: " << aui->GetWireDataStr() << std::endl;
 	std::cout << "-----------------------------------------------------------------------------------" << std::endl;
 
 }
@@ -105,6 +104,157 @@ void Decoder::PrintAssembly()
 		std::cout << "The instruction was not found or invalid." << std::endl;
 
 	}
+
+}
+
+void Decoder::ConnectReadReg1(Wire* wire)
+{
+
+	// Set the wire
+	readReg1 = wire;
+
+}
+
+void Decoder::ConnectReadReg2(Wire* wire)
+{
+
+	// Set the wire
+	readReg2 = wire;
+
+}
+
+void Decoder::ConnectWriteEnable(Wire* wire)
+{
+
+	// Set the wire
+	writeEnable = wire;
+
+}
+
+void Decoder::ConnectWriteReg(Wire* wire)
+{
+
+	// Set the wire
+	writeReg = wire;
+
+}
+
+void Decoder::ConnectWriteSel(Wire* wire)
+{
+
+	// Set the wire
+	writeSel = wire;
+
+}
+
+void Decoder::ConnectImmi(Wire* wire)
+{
+
+	// Set the wire
+	immi = wire;
+
+}
+
+void Decoder::ConnectImmi2(Wire* wire)
+{
+
+	// Set the wire
+	immi2 = wire;
+
+}
+
+void Decoder::ConnectSign(Wire* wire)
+{
+
+	// Set the wire
+	sign = wire;
+
+}
+
+void Decoder::ConnectALUSrc(Wire* wire)
+{
+
+	// Set the wire
+	ALUSrc = wire;
+
+}
+
+void Decoder::ConnectALUop(Wire* wire)
+{
+
+	// Set the wire
+	ALUop = wire;
+
+}
+
+void Decoder::ConnectALUdataSel(Wire* wire)
+{
+
+	// Set the wire
+	ALUdataSel = wire;
+
+}
+
+void Decoder::ConnectFlagControl(Wire* wire)
+{
+
+	// Set the wire
+	flagControl = wire;
+
+}
+
+void Decoder::ConnectOffset(Wire* wire)
+{
+
+	// Set the wire
+	offset = wire;
+
+}
+
+void Decoder::ConnectMemRead(Wire* wire)
+{
+
+	memRead = wire;
+
+}
+
+void Decoder::ConnectMemWrite(Wire* wire)
+{
+
+	// Set the wire
+	memWrite = wire;
+
+}
+
+void Decoder::ConnectMemSize(Wire* wire)
+{
+
+	// Set the wire
+	memSize = wire;
+
+}
+
+void Decoder::ConnectJump(Wire* wire)
+{
+
+	// Set the wire
+	jump = wire;
+
+}
+
+void Decoder::ConnectAui(Wire* wire)
+{
+
+	// Set the wire
+	aui = wire;
+
+}
+
+void Decoder::ConnectJalr(Wire* wire)
+{
+
+	// Set the wire
+	jalr = wire;
 
 }
 
@@ -132,7 +282,6 @@ void Decoder::DecodeInstruction()
 	opcode = instruction.substr(25, 7);
 
 	// Identify opcodes.
-	
 	// ALU Operations
 	if (opcode.compare("0110011") == 0)
 	{
@@ -140,25 +289,25 @@ void Decoder::DecodeInstruction()
 		std::string func7 = instruction.substr(0, 7);
 		std::string func3 = instruction.substr(17, 3);
 		
-		readReg1 = instruction.substr(7, 5);
-		readReg2 = instruction.substr(12, 5);
-		writeEnable = true;
-		writeReg = instruction.substr(20, 5);
-		ALUdataSel = false;
-		ALUSrc = false;
-		writeSel = "00";
+		readReg1->SetWireData(instruction.substr(7, 5));
+		readReg2->SetWireData(instruction.substr(12, 5));
+		writeEnable->SetWireData("1");
+		writeReg->SetWireData(instruction.substr(20, 5));
+		ALUdataSel->SetWireData("0");
+		ALUSrc->SetWireData("0");
+		writeSel->SetWireData("00");
 
 		// Default states.
-		immi = "000000000000";
-		immi2 = "00000000000000000000";
-		flagControl = "000";
-		offset = "0000000000000";
-		memRead = false;
-		memWrite = false;
-		memSize = "00";
-		jump = false;
-		aui = false;
-		sign = true;
+		//immi->SetWireData("000000000000");
+		//immi2->SetWireData("00000000000000000000");
+		//flagControl->SetWireData("000");
+		//offset->SetWireData("0000000000000");
+		//memRead->SetWireData("0");
+		//memWrite->SetWireData("0");
+		//memSize->SetWireData("00");
+		//jump->SetWireData("0");
+		//aui->SetWireData("0");
+		//sign->SetWireData("1");
 
 		// ADD
 		if (func7.compare("0000000") == 0 && func3.compare("000") == 0)
@@ -166,7 +315,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "ADD";
-			ALUop = "00000";
+			ALUop->SetWireData("00000");
 
 		}
 
@@ -176,7 +325,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "SUB";
-			ALUop = "00001";
+			ALUop->SetWireData("00001");
 
 		}
 
@@ -186,7 +335,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "SLL";
-			ALUop = "00010";
+			ALUop->SetWireData("00010");
 
 		}
 
@@ -196,7 +345,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "SLT";
-			ALUop = "00011";
+			ALUop->SetWireData("00011");
 
 		}
 
@@ -206,7 +355,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "SLTU";
-			ALUop = "00011";
+			ALUop->SetWireData("00011");
 
 		}
 
@@ -216,7 +365,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "XOR";
-			ALUop = "00100";
+			ALUop->SetWireData("00100");
 
 		}
 
@@ -226,7 +375,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "SRL";
-			ALUop = "00101";
+			ALUop->SetWireData("00101");
 
 		}
 
@@ -236,7 +385,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "SRA";
-			ALUop = "00110";
+			ALUop->SetWireData("00110");
 
 		}
 
@@ -246,7 +395,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "OR";
-			ALUop = "00111";
+			ALUop->SetWireData("00111");
 
 		}
 
@@ -256,7 +405,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "AND";
-			ALUop = "01000";
+			ALUop->SetWireData("01000");
 
 		}
 
@@ -266,7 +415,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "MUL";
-			ALUop = "10000";
+			ALUop->SetWireData("10000");
 
 		}
 
@@ -276,7 +425,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "MULH";
-			ALUop = "10001";
+			ALUop->SetWireData("10001");
 
 		}
 
@@ -286,7 +435,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "MULHSU";
-			ALUop = "10010";
+			ALUop->SetWireData("10010");
 
 		}
 
@@ -296,7 +445,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "MULHU";
-			ALUop = "10011";
+			ALUop->SetWireData("10011");
 
 		}
 
@@ -306,7 +455,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "DIV";
-			ALUop = "10100";
+			ALUop->SetWireData("10100");
 
 		}
 
@@ -316,7 +465,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "DIVU";
-			ALUop = "11100";
+			ALUop->SetWireData("11100");
 
 		}
 
@@ -326,7 +475,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "REM";
-			ALUop = "11101";
+			ALUop->SetWireData("11101");
 
 		}
 
@@ -336,7 +485,7 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "REMU";
-			ALUop = "11110";
+			ALUop->SetWireData("11110");
 
 		}
 
@@ -350,24 +499,24 @@ void Decoder::DecodeInstruction()
 		std::string func7 = instruction.substr(0, 7);
 		std::string func3 = instruction.substr(17, 3);
 
-		immi = instruction.substr(0, 12);
-		readReg1 = instruction.substr(12, 5);
-		writeEnable = true;
-		writeReg = instruction.substr(20, 5);
-		ALUSrc = true;
-		ALUdataSel = false;
-		writeSel = "00";
+		immi->SetWireData(instruction.substr(0, 12));
+		readReg1->SetWireData(instruction.substr(12, 5));
+		writeEnable->SetWireData("1");
+		writeReg->SetWireData(instruction.substr(20, 5));
+		ALUSrc->SetWireData("1");
+		ALUdataSel->SetWireData("0");
+		writeSel->SetWireData("00");
 
 		// Default states.
-		readReg2 = "00000";
-		immi2 = "00000000000000000000";
-		flagControl = "000";
-		offset = "0000000000000";
-		memRead = false;
-		memWrite = false;
-		memSize = "00";
-		jump = false;
-		aui = false;
+		//readReg2->SetWireData("00000");
+		//immi2->SetWireData("00000000000000000000");
+		//flagControl->SetWireData("000");
+		//offset->SetWireData("0000000000000");
+		//memRead->SetWireData("0");
+		//memWrite->SetWireData("0");
+		//memSize->SetWireData("00");
+		//jump->SetWireData("0");
+		//aui->SetWireData("0");
 
 		// ADDI
 		if ( func3.compare("000") == 0)
@@ -375,8 +524,8 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "ADDI";
-			sign = true;
-			ALUop = "00000";
+			sign->SetWireData("1");
+			ALUop->SetWireData("00000");
 
 		}
 
@@ -386,8 +535,8 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "SLTI";
-			sign = true;
-			ALUop = "00011";
+			sign->SetWireData("1");
+			ALUop->SetWireData("00011");
 
 		}
 
@@ -397,8 +546,8 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "SLTIU";
-			sign = false;
-			ALUop = "01011";
+			sign->SetWireData("0");
+			ALUop->SetWireData("01011");
 
 		}
 
@@ -408,8 +557,8 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "XORI";
-			sign = true;
-			ALUop = "00100";
+			sign->SetWireData("1");
+			ALUop->SetWireData("00100");
 
 		}
 
@@ -419,8 +568,8 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "ORI";
-			sign = true;
-			ALUop = "00111";
+			sign->SetWireData("1");
+			ALUop->SetWireData("00111");
 
 		}
 
@@ -430,8 +579,8 @@ void Decoder::DecodeInstruction()
 
 			validState = true;
 			assemblyInst = "ANDI";
-			sign = true;
-			ALUop = "01000";
+			sign->SetWireData("1");
+			ALUop->SetWireData("01000");
 
 		}
 
@@ -442,8 +591,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "SLLI";
 
-			sign = true;
-			ALUop = "01001";
+			sign->SetWireData("1");
+			ALUop->SetWireData("01001");
 
 		}
 
@@ -454,8 +603,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "SRLI";
 
-			sign = true;
-			ALUop = "01010";
+			sign->SetWireData("1");
+			ALUop->SetWireData("01010");
 
 		}
 
@@ -466,8 +615,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "SRAI";
 
-			sign = true;
-			ALUop = "01100";
+			sign->SetWireData("1");
+			ALUop->SetWireData("01100");
 
 		}
 
@@ -479,23 +628,23 @@ void Decoder::DecodeInstruction()
 
 		std::string func3 = instruction.substr(17, 3);
 
-		writeSel = "01";
-		writeEnable = true;
-		immi = instruction.substr(0, 12);
-		readReg1 = instruction.substr(12, 5);
-		writeReg = instruction.substr(20, 5);
-		ALUSrc = true;
-		ALUdataSel = true;
-		memRead = true;
-		memRead = false;
+		writeSel->SetWireData("01");
+		writeEnable->SetWireData("1");
+		immi->SetWireData(instruction.substr(0, 12));
+		readReg1->SetWireData(instruction.substr(12, 5));
+		writeReg->SetWireData(instruction.substr(20, 5));
+		ALUSrc->SetWireData("1");
+		ALUdataSel->SetWireData("1");
+		memRead->SetWireData("1");
+		memWrite->SetWireData("0");
 
 		// Default states.
-		readReg2 = "00000";
-		immi2 = "00000000000000000000";
-		flagControl = "000";
-		offset = "0000000000000";
-		jump = false;
-		aui = false;
+		//readReg2->SetWireData("00000");
+		//immi2->SetWireData("00000000000000000000");
+		//flagControl->SetWireData("000");
+		//offset->SetWireData("0000000000000");
+		//jump->SetWireData("0");
+		//aui->SetWireData("0");
 
 		// LB
 		if (func3.compare("000") == 0)
@@ -504,9 +653,9 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "LB";
 
-			ALUop = "01111";
-			memSize = "00";
-			sign = true;
+			ALUop->SetWireData("01111");
+			memSize->SetWireData("00");
+			sign->SetWireData("1");
 
 		}
 
@@ -517,9 +666,9 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "LH";
 
-			ALUop = "01111";
-			memSize = "01";
-			sign = true;
+			ALUop->SetWireData("01111");
+			memSize->SetWireData("01");
+			sign->SetWireData("1");
 
 		}
 
@@ -530,9 +679,9 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "LW";
 
-			ALUop = "01111";
-			memSize = "10";
-			sign = true;
+			ALUop->SetWireData("01111");
+			memSize->SetWireData("10");
+			sign->SetWireData("1");
 
 		}
 
@@ -543,9 +692,9 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "LBU";
 
-			ALUop = "01111";
-			memSize = "00";
-			sign = false;
+			ALUop->SetWireData("01111");
+			memSize->SetWireData("00");
+			sign->SetWireData("0");
 
 		}
 
@@ -556,9 +705,9 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "LHU";
 
-			ALUop = "01111";
-			memSize = "01";
-			sign = false;
+			ALUop->SetWireData("01111");
+			memSize->SetWireData("01");
+			sign->SetWireData("0");
 
 		}
 
@@ -569,9 +718,9 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "LWU";
 
-			ALUop = "01111";
-			memSize = "10";
-			sign = false;
+			ALUop->SetWireData("01111");
+			memSize->SetWireData("10");
+			sign->SetWireData("0");
 
 		}
 
@@ -583,24 +732,24 @@ void Decoder::DecodeInstruction()
 
 		std::string func3 = instruction.substr(17, 3);
 
-		immi = instruction.substr(0, 7) + instruction.substr(20, 5);
-		readReg1 = instruction.substr(7, 5);
-		readReg2 = instruction.substr(12, 5);
-		ALUSrc = true;
-		ALUdataSel = true;
-		sign = true;
-		memRead = false;
-		memWrite = true;
+		immi->SetWireData(instruction.substr(0, 7) + instruction.substr(20, 5));
+		readReg1->SetWireData(instruction.substr(7, 5));
+		readReg2->SetWireData(instruction.substr(12, 5));
+		ALUSrc->SetWireData("1");
+		ALUdataSel->SetWireData("1");
+		sign->SetWireData("1");
+		memRead->SetWireData("0");
+		memWrite->SetWireData("1");
 
 		// Default states.
-		writeEnable = false;
-		writeReg = "00000";
-		writeSel = "00";
-		immi2 = "00000000000000000000";
-		jump = false;
-		aui = false;
-		flagControl = "000";
-		offset = "0000000000000";
+		//writeEnable->SetWireData("0");
+		//writeReg->SetWireData("00000");
+		//writeSel->SetWireData("00");
+		//immi2->SetWireData("00000000000000000000");
+		//jump->SetWireData("0");
+		//aui->SetWireData("0");
+		//flagControl->SetWireData("000");
+		//offset->SetWireData("0000000000000");
 
 		// SB
 		if (func3.compare("000") == 0)
@@ -609,8 +758,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "SB";
 
-			ALUop = "11011";
-            memSize = "00";
+			ALUop->SetWireData("11011");
+            memSize->SetWireData("00");
 
 		}
 
@@ -621,8 +770,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "SH";
 
-			ALUop = "11011";
-            memSize = "01";
+			ALUop->SetWireData("11011");
+            memSize->SetWireData("01");
 
 		}
 
@@ -633,8 +782,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "SW";
 
-			ALUop = "11011";
-            memSize = "01";
+			ALUop->SetWireData("11011");
+            memSize->SetWireData("10");
 
 		}
 
@@ -645,25 +794,25 @@ void Decoder::DecodeInstruction()
 	{
 
 		std::string func3 = instruction.substr(17, 3);
-		offset = instruction.substr(0, 1) + instruction.substr(24, 1) + instruction.substr(1, 6) + instruction.substr(20, 4) + "0";
-		readReg1 = instruction.substr(7, 5);
-		readReg2 = instruction.substr(12, 5);
-		ALUSrc = false;
+		offset->SetWireData(instruction.substr(0, 1) + instruction.substr(24, 1) + instruction.substr(1, 6) + instruction.substr(20, 4) + "0");
+		readReg1->SetWireData(instruction.substr(7, 5));
+		readReg2->SetWireData(instruction.substr(12, 5));
+		ALUSrc->SetWireData("0");
 		// Jump must be zero because we are branching.
-		jump = false;
+		jump->SetWireData("0");
 
-		writeEnable = false;
-		writeReg = "00000";
-		writeSel = "00";
-		immi = "000000000000";
-		immi2 = "00000000000000000000";
-		sign = false;
-		ALUdataSel = false;
-		flagControl = "000";
-		memRead = false;
-		memWrite = false;
-		memSize = "00";
-		aui = false;
+		writeEnable->SetWireData("0");
+		writeReg->SetWireData("00000");
+		writeSel->SetWireData("00");
+		immi->SetWireData("000000000000");
+		immi2->SetWireData("00000000000000000000");
+		sign->SetWireData("0");
+		ALUdataSel->SetWireData("0");
+		flagControl->SetWireData("000");
+		memRead->SetWireData("0");
+		memWrite->SetWireData("0");
+		memSize->SetWireData("00");
+		aui->SetWireData("0");
 
 		// BEQ
 		if (func3.compare("000") == 0)
@@ -672,8 +821,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "BEQ";
 
-			ALUop = "10101";
-			flagControl = "000";
+			ALUop->SetWireData("10101");
+			flagControl->SetWireData("000");
 
 		}
 
@@ -684,8 +833,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "BNE";
 
-			ALUop = "10110";
-			flagControl = "001";
+			ALUop->SetWireData("10110");
+			flagControl->SetWireData("001");
 
 		}
 
@@ -696,8 +845,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "BLT";
 
-			ALUop = "10111";
-			flagControl = "010";
+			ALUop->SetWireData("10111");
+			flagControl->SetWireData("010");
 
 		}
 
@@ -708,8 +857,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "BGE";
 
-			ALUop = "11000";
-			flagControl = "011";
+			ALUop->SetWireData("11000");
+			flagControl->SetWireData("011");
 
 		}
 
@@ -720,8 +869,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "BLTU";
 
-			ALUop = "11001";
-			flagControl = "100";
+			ALUop->SetWireData("11001");
+			flagControl->SetWireData("100");
 
 		}
 
@@ -732,8 +881,8 @@ void Decoder::DecodeInstruction()
 			validState = true;
 			assemblyInst = "BGEU";
 
-			ALUop = "11010";
-			flagControl = "101";
+			ALUop->SetWireData("11010");
+			flagControl->SetWireData("101");
 
 		}
 
@@ -743,26 +892,26 @@ void Decoder::DecodeInstruction()
 	if (opcode.compare("0110111") == 0)
 	{
 
-		immi2 = instruction.substr(0, 20);
-		writeEnable = true;
-		writeReg = instruction.substr(20, 5);
-		writeSel = "10";
-		aui = false;
+		immi2->SetWireData(instruction.substr(0, 20));
+		writeEnable->SetWireData("1");
+		writeReg->SetWireData(instruction.substr(20, 5));
+		writeSel->SetWireData("10");
+		aui->SetWireData("0");
 
 		// Default states.
-		readReg1 = "00000";
-		readReg2 = "00000";
-		immi = "000000000000";
-		ALUSrc = false;
-		ALUop = "00000";
-		ALUdataSel = false;
-		flagControl = "000";
-		offset = "0000000000000";
-		memRead = false;
-		memWrite = false;
-		memSize = "00";
-		jump = false;
-        sign = true;
+		readReg1->SetWireData("00000");
+		readReg2->SetWireData("00000");
+		immi->SetWireData("000000000000");
+		ALUSrc->SetWireData("0");
+		ALUop->SetWireData("00000");
+		ALUdataSel->SetWireData("0");
+		flagControl->SetWireData("000");
+		offset->SetWireData("0000000000000");
+		memRead->SetWireData("0");
+		memWrite->SetWireData("0");
+		memSize->SetWireData("00");
+		jump->SetWireData("0");
+        sign->SetWireData("1");
 
 		validState = true;
 		assemblyInst = "LUI";
@@ -773,26 +922,26 @@ void Decoder::DecodeInstruction()
 	if (opcode.compare("0010111") == 0)
 	{
 
-		immi2 = instruction.substr(0, 20);
-		writeEnable = true;
-		writeReg = instruction.substr(20, 5);
-		writeSel = "10";
-		aui = true;
+		immi2->SetWireData(instruction.substr(0, 20));
+		writeEnable->SetWireData("1");
+		writeReg->SetWireData(instruction.substr(20, 5));
+		writeSel->SetWireData("10");
+		aui->SetWireData("1");
 
 		// Default states.
-		readReg1 = "00000";
-		readReg2 = "00000";
-		immi = "000000000000";
-		ALUSrc = false;
-		ALUop = "00000";
-		ALUdataSel = false;
-		flagControl = "000";
-		offset = "0000000000000";
-		memRead = false;
-		memWrite = false;
-		memSize = "00";
-		jump = false;
-        sign = true;
+		readReg1->SetWireData("00000");
+		readReg2->SetWireData("00000");
+		immi->SetWireData("000000000000");
+		ALUSrc->SetWireData("0");
+		ALUop->SetWireData("00000");
+		ALUdataSel->SetWireData("0");
+		flagControl->SetWireData("000");
+		offset->SetWireData("0000000000000");
+		memRead->SetWireData("0");
+		memWrite->SetWireData("0");
+		memSize->SetWireData("00");
+		jump->SetWireData("0");
+        sign->SetWireData("1");
 
 		validState = true;
 		assemblyInst = "AUIPC";
@@ -803,26 +952,26 @@ void Decoder::DecodeInstruction()
 	if (opcode.compare("1101111") == 0)
 	{
 
-		immi2 = instruction.substr(0, 1) + instruction.substr(12, 8) + instruction.substr(11, 1) +instruction.substr(1, 10);
-		writeEnable = true;
-		writeReg = instruction.substr(20, 5);
-		writeSel = "11";
-		jump = true;
-		jalr = false;
+		immi2->SetWireData(instruction.substr(0, 1) + instruction.substr(12, 8) + instruction.substr(11, 1) +instruction.substr(1, 10));
+		writeEnable->SetWireData("1");
+		writeReg->SetWireData(instruction.substr(20, 5));
+		writeSel->SetWireData("11");
+		jump->SetWireData("1");
+		jalr->SetWireData("0");
 
 		// Default states.
-		readReg1 = "00000";
-		readReg2 = "00000";
-		immi = "000000000000";
-		ALUSrc = false;
-		ALUop = "00000";
-		ALUdataSel = false;
-		flagControl = "000";
-		offset = "0000000000000";
-		memRead = false;
-		memWrite = false;
-		memSize = "00";
-        sign = true;
+		readReg1->SetWireData("00000");
+		readReg2->SetWireData("00000");
+		immi->SetWireData("000000000000");
+		ALUSrc->SetWireData("0");
+		ALUop->SetWireData("00000");
+		ALUdataSel->SetWireData("0");
+		flagControl->SetWireData("000");
+		offset->SetWireData("0000000000000");
+		memRead->SetWireData("0");
+		memWrite->SetWireData("0");
+		memSize->SetWireData("00");
+        sign->SetWireData("1");
 
 		validState = true;
 		assemblyInst = "JAL";
@@ -833,32 +982,71 @@ void Decoder::DecodeInstruction()
 	if (opcode.compare("1100111") == 0)
 	{
 
-		immi = instruction.substr(0, 12);
-		readReg1 = instruction.substr(12, 5);
-		writeEnable = true;
-		writeReg = instruction.substr(20, 5);
-		writeSel = "11";
-		jump = true;
-		jalr = true;
-		sign = true;
+		immi->SetWireData(instruction.substr(0, 12));
+		readReg1->SetWireData(instruction.substr(12, 5));
+		writeEnable->SetWireData("1");
+		writeReg->SetWireData(instruction.substr(20, 5));
+		writeSel->SetWireData("11");
+		jump->SetWireData("1");
+		jalr->SetWireData("1");
+		sign->SetWireData("1");
 
 		// Default states.
-		readReg2 = "00000";
-		immi2 = "00000000000000000000";
-		ALUSrc = false;
-		ALUop = "00000";
-		ALUdataSel = false;
-		flagControl = "000";
-		offset = "0000000000000";
-		memRead = false;
-		memWrite = false;
-		memSize = "00";
+		readReg2->SetWireData("00000");
+		immi2->SetWireData("00000000000000000000");
+		ALUSrc->SetWireData("0");
+		ALUop->SetWireData("00000");
+		ALUdataSel->SetWireData("0");
+		flagControl->SetWireData("000");
+		offset->SetWireData("0000000000000");
+		memRead->SetWireData("0");
+		memWrite->SetWireData("0");
+		memSize->SetWireData("00");
 
 		validState = true;
 		assemblyInst = "JALR";
 
 	}
 
-}
+	// NO OP
+	if (opcode.compare("0000000") == 0)
+	{
 
+		flagControl->SetWireData("000");
+
+		validState = true;
+		assemblyInst = "NOOP";
+
+	}
+
+	// HALT
+	if (opcode.compare("1111111") == 0)
+	{
+
+
+		immi->SetWireData("000000000000");
+		readReg1->SetWireData("00000");
+		writeEnable->SetWireData("0");
+		writeReg->SetWireData("00000");
+		writeSel->SetWireData("0");
+		jump->SetWireData("0");
+		jalr->SetWireData("0");
+		sign->SetWireData("0");
+		readReg2->SetWireData("00000");
+		immi2->SetWireData("00000000000000000000");
+		ALUSrc->SetWireData("0");
+		ALUop->SetWireData("00000");
+		ALUdataSel->SetWireData("0");
+		flagControl->SetWireData("000");
+		offset->SetWireData("0000000000000");
+		memRead->SetWireData("0");
+		memWrite->SetWireData("0");
+		memSize->SetWireData("00");
+
+		validState = true;
+		assemblyInst = "HALT";
+
+	}
+
+}
 

@@ -6,13 +6,55 @@
     <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp">
       <Filter>Functional-Blocks\DECODER</Filter>
     </ClCompile>
+    <ClCompile Include="Data-Handler\Instruction.cpp">
+      <Filter>Data-Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp">
+      <Filter>Functional-Blocks\ADDER</Filter>
+    </ClCompile>
+    <ClCompile Include="Data-Handler\Wire.cpp">
+      <Filter>Data-Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Data-Handler\Data.cpp">
+      <Filter>Data-Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\MUX\Mux2to1.cpp">
+      <Filter>Functional-Blocks\MUX</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\MUX\Mux4to1.cpp">
+      <Filter>Functional-Blocks\MUX</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\EXTEND\SignExtend.cpp">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\EXTEND\Extend.cpp">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\EXTEND\ZeroExtend.cpp">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\SHIFT\ShiftLeft.cpp">
+      <Filter>Functional-Blocks\SHIFT</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\REGISTERFILE\RegisterFile.cpp">
+      <Filter>Functional-Blocks\REGISTERFILE</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\PROGRAMCOUNTER\ProgramCounter.cpp">
+      <Filter>Functional-Blocks\PROGRAMCOUNTER</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\PIPELINEREGISTERS\PipelineRegisters.cpp">
+      <Filter>Functional-Blocks\PIPELINEREGISTERS</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\ALU\ALU.cpp">
+      <Filter>Functional-Blocks\ALU</Filter>
+    </ClCompile>
+    <ClCompile Include="Functional-Blocks\DATAMEMORY\DataMemory.cpp">
+      <Filter>Functional-Blocks\DATAMEMORY</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
       <UniqueIdentifier>{c73ebde7-0981-42f5-bcf2-e958a5acfbd8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Functional-Blocks\ALU">
-      <UniqueIdentifier>{c5bf74ad-bd7b-4122-a5e4-5a75523b772d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Functional-Blocks\MUX">
       <UniqueIdentifier>{d82897be-7224-480f-97a8-c7773d7944ca}</UniqueIdentifier>
@@ -23,11 +65,86 @@
     <Filter Include="Functional-Blocks\DECODER">
       <UniqueIdentifier>{30ce1e77-2c26-4a50-8bce-8404535ff7b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Functional-Blocks\ADDER">
+      <UniqueIdentifier>{f5775a40-6364-4bf0-ac1e-838ea88c497d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\EXTEND">
+      <UniqueIdentifier>{03a46001-2fbc-4c75-88cf-db56149ed62a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\SHIFT">
+      <UniqueIdentifier>{08cbe0a7-c2bf-4e23-b6cb-9ebf79fb89ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\REGISTERFILE">
+      <UniqueIdentifier>{430610da-6a68-4dbc-be6f-668a1590c1ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\PROGRAMCOUNTER">
+      <UniqueIdentifier>{9fdf1fe4-7ae1-4889-a69c-2fbf4a711cf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\PIPELINEREGISTERS">
+      <UniqueIdentifier>{59ab40d4-1328-4cf8-b76a-05e77e3052c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\ALU">
+      <UniqueIdentifier>{22a2c10a-8673-4b32-98c5-43e8c2558e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\DATAMEMORY">
+      <UniqueIdentifier>{0d62a858-e95f-47bc-80a1-e1b6d10e30b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h" />
     <ClInclude Include="Functional-Blocks\DECODER\Decoder.h">
       <Filter>Functional-Blocks\DECODER</Filter>
     </ClInclude>
+    <ClInclude Include="Data-Handler\Event.h">
+      <Filter>Data-Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Data-Handler\Instruction.h">
+      <Filter>Data-Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\ADDER\Adder.h">
+      <Filter>Functional-Blocks\ADDER</Filter>
+    </ClInclude>
+    <ClInclude Include="Data-Handler\Wire.h">
+      <Filter>Data-Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Data-Handler\Data.h">
+      <Filter>Data-Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\MUX\Mux2to1.h">
+      <Filter>Functional-Blocks\MUX</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\MUX\Mux4to1.h">
+      <Filter>Functional-Blocks\MUX</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\EXTEND\SignExtend.h">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\EXTEND\Extend.h">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\EXTEND\ZeroExtend.h">
+      <Filter>Functional-Blocks\EXTEND</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\SHIFT\ShiftLeft.h">
+      <Filter>Functional-Blocks\SHIFT</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\REGISTERFILE\RegisterFile.h">
+      <Filter>Functional-Blocks\REGISTERFILE</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\PROGRAMCOUNTER\ProgramCounter.h">
+      <Filter>Functional-Blocks\PROGRAMCOUNTER</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\PIPELINEREGISTERS\PipelineRegisters.h">
+      <Filter>Functional-Blocks\PIPELINEREGISTERS</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\ALU\ALU.h">
+      <Filter>Functional-Blocks\ALU</Filter>
+    </ClInclude>
+    <ClInclude Include="Functional-Blocks\DATAMEMORY\DataMemory.h">
+      <Filter>Functional-Blocks\DATAMEMORY</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>

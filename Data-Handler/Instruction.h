@@ -1,29 +1,23 @@
 #ifndef __INSTRUCTION_H__
 #define __INSTRUCTION_H__
 
-#include <vector>
-#include <string>
-#include <iostream>
+#include "Data.h"
 
-class Instruction
+class Instruction : private Data 
 {
 
 public:
-	Instruction();
-	Instruction(std::string inst);
+	Instruction() : Data() {}
+	Instruction(std::string inst) : Data(inst) {}
 
-    // Check the string for invalid setting such as not 32-bit
+	// Set the instruction.
 	void SetInstruction(std::string inst);
 
-    // Return instruction as a string
+	// Get the instruction string
 	std::string GetInstructionStr();
+
+	// Return true if the instruction valid.
 	bool IsInstructionValid();
-
-private:
-
-    // True if the instruction is 32-bit
-	bool validInstruction;
-	std::string instructionStr;
 
 };
 
