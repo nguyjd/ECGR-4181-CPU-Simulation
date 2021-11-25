@@ -18,7 +18,6 @@ add_executable(CPU
 	Functional-Blocks/PIPELINEREGISTERS/PipelineRegisters.cpp
 	Functional-Blocks/ALU/ALU.cpp
 	Functional-Blocks/DATAMEMORY/DataMemory.cpp
-	Data-Handler/Event.cpp
 	Data-Handler/Instruction.cpp
 	Data-Handler/Data.cpp
 	Data-Handler/Wire.cpp
