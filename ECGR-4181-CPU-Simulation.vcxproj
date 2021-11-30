@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Functional-Blocks\DECODER\;$(ProjectDir)Functional-Blocks\ALU\;$(ProjectDir)Functional-Blocks\DATAMEMORY\;$(ProjectDir)Functional-Blocks\PIPELINEREGISTERS\;$(ProjectDir)Functional-Blocks\PROGRAMCOUNTER\;$(ProjectDir)Functional-Blocks\REGISTERFILE\;$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Functional-Blocks\CACHE\;$(ProjectDir)Functional-Blocks\DECODER\;$(ProjectDir)Functional-Blocks\ALU\;$(ProjectDir)Functional-Blocks\DATAMEMORY\;$(ProjectDir)Functional-Blocks\PIPELINEREGISTERS\;$(ProjectDir)Functional-Blocks\PROGRAMCOUNTER\;$(ProjectDir)Functional-Blocks\REGISTERFILE\;$(ProjectDir)Functional-Blocks\SHIFT\;$(ProjectDir)Functional-Blocks\EXTEND\;$(ProjectDir)Functional-Blocks\MUX\;$(ProjectDir)Data-Handler\;$(ProjectDir)Functional-Blocks\ADDER\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -146,6 +146,7 @@
     <ClCompile Include="Data-Handler\Wire.cpp" />
     <ClCompile Include="Functional-Blocks\ADDER\Adder.cpp" />
     <ClCompile Include="Functional-Blocks\ALU\ALU.cpp" />
+    <ClCompile Include="Functional-Blocks\CACHE\LevelOneCache.cpp" />
     <ClCompile Include="Functional-Blocks\DATAMEMORY\DataMemory.cpp" />
     <ClCompile Include="Functional-Blocks\DECODER\Decoder.cpp" />
     <ClCompile Include="Functional-Blocks\EXTEND\Extend.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Functional-Blocks\PROGRAMCOUNTER\ProgramCounter.cpp" />
     <ClCompile Include="Functional-Blocks\REGISTERFILE\RegisterFile.cpp" />
     <ClCompile Include="Functional-Blocks\SHIFT\ShiftLeft.cpp" />
+    <ClCompile Include="Assignment3.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="System.cpp" />
   </ItemGroup>
@@ -167,6 +169,7 @@
     <ClInclude Include="Data-Handler\Wire.h" />
     <ClInclude Include="Functional-Blocks\ADDER\Adder.h" />
     <ClInclude Include="Functional-Blocks\ALU\ALU.h" />
+    <ClInclude Include="Functional-Blocks\CACHE\LevelOneCache.h" />
     <ClInclude Include="Functional-Blocks\DATAMEMORY\DataMemory.h" />
     <ClInclude Include="Functional-Blocks\DECODER\Decoder.h" />
     <ClInclude Include="Functional-Blocks\EXTEND\Extend.h" />
