@@ -55,6 +55,10 @@
     <ClCompile Include="Functional-Blocks\CACHE\LevelOneCache.cpp">
       <Filter>Functional-Blocks\CACHE</Filter>
     </ClCompile>
+    <ClCompile Include="CPU.cpp" />
+    <ClCompile Include="Functional-Blocks\BUSARBITER\BusArbiter.cpp">
+      <Filter>Functional-Blocks\BUSARBITER</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Functional-Blocks">
@@ -95,6 +99,9 @@
     </Filter>
     <Filter Include="Functional-Blocks\CACHE">
       <UniqueIdentifier>{22dd2b50-eaf9-4964-aa1d-3acd6bfe4212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functional-Blocks\BUSARBITER">
+      <UniqueIdentifier>{247e1e16-e2ce-419d-b0fd-df288add52f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +159,10 @@
     </ClInclude>
     <ClInclude Include="Functional-Blocks\CACHE\LevelOneCache.h">
       <Filter>Functional-Blocks\CACHE</Filter>
+    </ClInclude>
+    <ClInclude Include="CPU.h" />
+    <ClInclude Include="Functional-Blocks\BUSARBITER\BusArbiter.h">
+      <Filter>Functional-Blocks\BUSARBITER</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

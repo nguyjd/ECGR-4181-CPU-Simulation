@@ -6,6 +6,7 @@ add_executable(CPU
 	main.cpp
 	system.cpp
 	Assignment3.cpp
+	CPU.cpp
 	Functional-Blocks/DECODER/Decoder.cpp
 	Functional-Blocks/ADDER/Adder.cpp
 	Functional-Blocks/MUX/Mux2to1.cpp
@@ -20,6 +21,7 @@ add_executable(CPU
 	Functional-Blocks/ALU/ALU.cpp
 	Functional-Blocks/DATAMEMORY/DataMemory.cpp
 	Functional-Blocks/CACHE/LevelOneCache.cpp
+	Functional-Blocks/BUSARBITER/BusArbiter.cpp
 	Data-Handler/Instruction.cpp
 	Data-Handler/Data.cpp
 	Data-Handler/Wire.cpp
@@ -39,4 +41,5 @@ target_include_directories(CPU PRIVATE
 	Functional-Blocks/ALU
 	Functional-Blocks/DATAMEMORY
 	Functional-Blocks/CACHE
+	Functional-Blocks/BUSARBITER
 )

@@ -9,38 +9,36 @@ class LevelOneCache
 
 public:
 
-	LevelOneCache(Wire* memaddress, Wire* read, Wire* write, Wire* bus);
+	LevelOneCache(Wire* memaddress, Wire* read, Wire* write, Wire* data, Wire* replace, Wire* request, Wire* grant, Wire* bus);
 	~LevelOneCache();
 
 	void Update();
+
+	void Snoop();
 
 
 private:
 
 	int BinaryToIndex(Wire* wire);
+	std::string IntTo4BitString(int input);
 
 	const int MEMDATASIZE = 32;
-
-	const int BLOCKCOUNT = 512;
 	const int BYTECOUNT = 64;
-	const int SETS = 2;
-	
-	const int TAGDATASIZE = 20;
+	const int SETS = 512;
+	const int TAGDATASIZE = 19;
 	const int INDEXDATASIZE = 9;
 	const int OFFSETDATASIZE = 4;
-
 	const int STATESIZE = 2;
-
-	// 2 bits - Bus Tranaction
-	// 2 bits - State
-	// 32 bits - Data
-	const int MEMBUSSIZE = 36;
 
 	// To be connected
 	Wire* memoryAddress;
 	Wire* memRead;
 	Wire* memWrite;
-	Wire* memBusWire;
+	Wire* memData;
+	Wire* replaceBlock;
+	Wire* requestWire;
+	Wire* grantWire;
+	Wire* memBus;
 
 	// Internal Wires
 	Wire* tagData;
@@ -48,12 +46,22 @@ private:
 	Wire* offsetData;
 
 	// Has tags and state bits
-	std::vector<Wire*> setOneTags;
-	std::vector<Wire*> setTwoTags;
+	std::vector<Wire*> blockOneTags;
+	std::vector<Wire*> blockTwoTags;
 
 	// Has the data
-	std::vector<std::vector<Wire*>> setOne;
-	std::vector<std::vector<Wire*>> setTwo;
+	std::vector<std::vector<Wire*>> blockOne;
+	std::vector<std::vector<Wire*>> blockTwo;
+
+	int lastUsedBlock;
+	bool isBlockBeingReplaced;
+	bool exclusiveState;
+	bool sharedState;
+
+	int blockOffset;
+	int setIndex;
+
+	int snoopBlockOffset;
 
 };
 
