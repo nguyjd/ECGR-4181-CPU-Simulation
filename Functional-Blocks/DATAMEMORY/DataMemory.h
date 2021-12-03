@@ -3,6 +3,7 @@
 
 #include "Wire.h"
 #include <vector>
+#include <random>
 
 class DataMemory
 {
@@ -31,7 +32,8 @@ public:
 
 private:
 
-	const unsigned long long MEMORYSIZE = 30;
+	// 1048576 bytes / 4 bytes = 262144
+	const unsigned long long MEMORYSIZE = 262144;
 
 	// Check if the size of the bus is correct and if the wires exist.
 	bool CheckConnection();

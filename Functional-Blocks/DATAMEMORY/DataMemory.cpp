@@ -15,7 +15,15 @@ DataMemory::DataMemory()
 	for (unsigned long long i = 0; i < MEMORYSIZE; i++)
 	{
 		
-		ram.push_back(new Wire("10101010"));
+		std::string number = "";
+		for (int j = 0; j < 32; j++)
+		{
+
+			number += std::to_string(rand() % 2);
+
+		}
+
+		ram.push_back(new Wire(number));
 
 	}
 
@@ -35,12 +43,23 @@ DataMemory::DataMemory(Wire* size, Wire* read, Wire* write, Wire* inputdata, Wir
 	outputSixteenBits = output16;
 	outputThirtyTwoBits = output32;
 
+	std::cout << "Filling the ram with random data." << std::endl;
+
 	for (unsigned long long i = 0; i < MEMORYSIZE; i++)
 	{
 
-		ram.push_back(new Wire("10101010"));
+		std::string number = "";
+		for (int j = 0; j < 32; j++)
+		{
+
+			number += std::to_string(rand() % 2);
+
+		}
+
+		ram.push_back(new Wire(number));
 
 	}
+	std::cout << "Finished filling ram with data." << std::endl;
 
 	validConfig = CheckConnection();
 
@@ -184,10 +203,12 @@ void DataMemory::Update()
 			{
 
 				std::string data = "";
-				data += ram[indexLoc + 3]->GetWireDataStr();
-				data += ram[indexLoc + 2]->GetWireDataStr();
-				data += ram[indexLoc + 1]->GetWireDataStr();
+				//data += ram[indexLoc + 3]->GetWireDataStr();
+				//data += ram[indexLoc + 2]->GetWireDataStr();
+				//data += ram[indexLoc + 1]->GetWireDataStr();
 				data += ram[indexLoc]->GetWireDataStr();
+
+				std::cout << "RAM: Outputting data " << data << std::endl;
 
 				outputThirtyTwoBits->SetWireData(data);
 
@@ -226,10 +247,13 @@ void DataMemory::Update()
 			if (memSize->GetWireDataStr().compare("10") == 0)
 			{
 
-				ram[indexLoc]->SetWireData(byte4);
-				ram[indexLoc + 1]->SetWireData(byte3);
-				ram[indexLoc + 2]->SetWireData(byte2);
-				ram[indexLoc + 3]->SetWireData(byte1);
+				
+
+				ram[indexLoc]->SetWireData(dataIn->GetWireDataStr());
+				outputThirtyTwoBits->SetWireData(dataIn->GetWireDataStr());
+				//ram[indexLoc + 1]->SetWireData(byte3);
+				//ram[indexLoc + 2]->SetWireData(byte2);
+				//ram[indexLoc + 3]->SetWireData(byte1);
 
 			}
 
