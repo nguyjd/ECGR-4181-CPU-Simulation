@@ -1,6 +1,6 @@
 #include "CPU.h"
 
-CPU::CPU(Wire* memBus, Wire* request, Wire* grant)
+CPU::CPU(Wire* memBus, Wire* request, Wire* grant, Wire* interrupt, Wire* halt, Wire* memData)
 {
 
 	memread = new Wire(1);
@@ -8,8 +8,11 @@ CPU::CPU(Wire* memBus, Wire* request, Wire* grant)
 	memAddress = new Wire(32);
 	data = new Wire(32);
 	stall = new Wire(1);
+	haltLine = halt;
 
 	cache = new LevelOneCache(memAddress, memread, memwrite, data, stall, request, grant, memBus);
+	cache->ConnectInterrupt(interrupt);
+	cache->ConnectWriteData(memData);
 
 	PC = 0;
 
@@ -33,8 +36,16 @@ void CPU::Update()
 	if (stall->GetWireDataStr().compare("1") == 0)
 	{
 
+		haltLine->SetWireData("0");
 		std::cout << "CPU: CPU is stalled." << std::endl;
 		cache->Update();
+
+		if (stall->GetWireDataStr().compare("0") == 0)
+		{
+
+			std::cout << "CPU: Received the data " << data->GetWireDataStr() << " from the cache." << std::endl;
+
+		}
 
 	}
 	else if (PC >= instr.size())
@@ -42,14 +53,17 @@ void CPU::Update()
 
 		std::cout << "CPU: There are no more instuctions to run for this CPU. It is in a halted state." << std::endl;
 		cache->Update();
+		haltLine->SetWireData("1");
 
 	}
 	else
 	{
 
+		haltLine->SetWireData("0");
 		std::cout << "CPU: Running next instruction." << std::endl;
 
 		memAddress->SetWireData(addresses[PC]);
+		data->SetWireData(instructionData[PC]);
 
 		if (instr[PC].compare("read") == 0)
 		{
@@ -58,6 +72,13 @@ void CPU::Update()
 			memwrite->SetWireData("0");
 			cache->Update();
 			memread->SetWireData("0");
+
+			if (stall->GetWireDataStr().compare("0") == 0)
+			{
+
+				std::cout << "CPU: Received the data " << data->GetWireDataStr() << " from the cache." << std::endl;
+
+			}
 
 		}
 		else

@@ -11,10 +11,16 @@ LevelOneCache::LevelOneCache(Wire* memaddress, Wire* read, Wire* write, Wire* da
 	requestWire = request;
 	grantWire = grant;
 	memBus = bus;
+	interrupt = nullptr;
+	ramData = nullptr;
 	
 	tagData = new Wire(TAGDATASIZE);
 	indexData = new Wire(INDEXDATASIZE);
 	offsetData = new Wire(OFFSETDATASIZE);
+
+	snoopTagData = new Wire(TAGDATASIZE);
+	snoopIndexData = new Wire(INDEXDATASIZE);
+	snoopOffsetData = new Wire(OFFSETDATASIZE);
 
 	for (int i = 0; i < SETS; i++)
 	{
@@ -47,6 +53,9 @@ LevelOneCache::LevelOneCache(Wire* memaddress, Wire* read, Wire* write, Wire* da
 
 	snoopBlockOffset = 0;
 
+	invalidateData = false;
+	forceCopyBack = false;
+
 }
 
 LevelOneCache::~LevelOneCache()
@@ -55,6 +64,10 @@ LevelOneCache::~LevelOneCache()
 	delete tagData;
 	delete indexData;
 	delete offsetData;
+
+	delete snoopTagData;
+	delete snoopIndexData;
+	delete snoopOffsetData;
 
 	for (int i = 0; i < SETS; i++)
 	{
@@ -74,11 +87,18 @@ LevelOneCache::~LevelOneCache()
 
 }
 
+// LOCALLY INITATIED ACCESSES
 void LevelOneCache::Update()
 {
 	
+	if (interrupt->GetWireDataStr().compare("1") == 0)
+	{
 
-	if (!isBlockBeingReplaced)
+		interrupt->SetWireData("0");
+
+	}
+
+	if (!isBlockBeingReplaced && !invalidateData && !forceCopyBack)
 	{
 
 		// Split the address up.
@@ -95,56 +115,66 @@ void LevelOneCache::Update()
 		// for the output text - block number.
 		int block = 0;
 
+		// For block 1
+		std::string tag1;
+		std::string state1;
+
+		// For block 2
+		std::string tag2;
+		std::string state2;
+
+		// For reading
+		std::string state;
+		std::string data;
+		std::string tag;
+
+		// Get the state and the tag from the block 1
+		tag1 = blockOneTags[setIndex]->GetWireDataStr();
+		state1 = tag1.substr(0, 2);
+		tag1 = tag1.substr(2, -1);
+
+		// Get the state and the tag from the block 2
+		tag2 = blockTwoTags[setIndex]->GetWireDataStr();
+		state2 = tag2.substr(0, 2);
+		tag2 = tag2.substr(2, -1);
+
+		if (tag1.compare(tagData->GetWireDataStr()) == 0)
+		{
+			
+			state = state1;
+			data = blockOne[setIndex][blockOffset]->GetWireDataStr();
+			tag = tagData->GetWireDataStr();
+
+			block = 1;
+			lastUsedBlock = 1;
+
+
+		}
+		else if (tag2.compare(tagData->GetWireDataStr()) == 0)
+		{
+
+			state = state2;
+			data = blockTwo[setIndex][blockOffset]->GetWireDataStr();
+			tag = tagData->GetWireDataStr();
+
+			block = 2;
+			lastUsedBlock = 2;
+
+		}
+		// Could not find the tag in the sets.
+		else
+		{
+
+			state = "00";
+
+		}
+
 		// CPU want to read.
 		if (memRead->GetWireDataStr().compare("1") == 0)
 		{
 
-			// For block 1
-			std::string tag1;
-			std::string state1;
-
-			// For block 2
-			std::string tag2;
-			std::string state2;
-
-			// For reading
-			std::string state;
-			std::string data;
-			std::string tag;
-
-			// Get the state and the tag from the block 1
-			tag1 = blockOneTags[setIndex]->GetWireDataStr();
-			state1 = tag1.substr(0, 2);
-			tag1 = tag1.substr(2, -1);
-
-			// Get the state and the tag from the block 2
-			tag2 = blockTwoTags[setIndex]->GetWireDataStr();
-			state2 = tag2.substr(0, 2);
-			tag2 = tag2.substr(2, -1);
-
-			if (tag1.compare(tagData->GetWireDataStr()) == 0 && state1.compare("00") != 0)
-			{
-				state = state1;
-				data = blockOne[setIndex][blockOffset]->GetWireDataStr();
-				tag = tagData->GetWireDataStr();
-
-				block = 1;
-				lastUsedBlock = 1;
-
-
-			}
-			else if (tag2.compare(tagData->GetWireDataStr()) == 0 && state2.compare("00") != 0)
-			{
-
-				state = state2;
-				data = blockTwo[setIndex][blockOffset]->GetWireDataStr();
-				tag = tagData->GetWireDataStr();
-
-				block = 2;
-				lastUsedBlock = 2;
-
-			}
-			else // Invalid state.
+			// Invalid state.
+			if (state.compare("00") == 0)
 			{
 
 				std::cout << "READ MISS" << std::endl;
@@ -163,11 +193,11 @@ void LevelOneCache::Update()
 
 				std::cout << "READ HIT" << std::endl;
 				std::cout << "The data in set " << setIndex << ", block " << block << " with a offset of " << blockOffset << " is in a shared state." << std::endl;
-				std::cout << "State and Tag Data: " << tag << std::endl;
+				std::cout << "State: " << state << std::endl;
+				std::cout << "Tag: " << tag << std::endl;
 				std::cout << "Data: " << data << std::endl;
+				memData->SetWireData(data);
 				std::cout << "Cache: The state of the data is going from shared to shared" << std::endl;
-
-
 
 			}
 
@@ -177,8 +207,10 @@ void LevelOneCache::Update()
 
 				std::cout << "READ HIT" << std::endl;
 				std::cout << "The data in set " << setIndex << ", block " << block << " with a offset of " << blockOffset << " is in a modified state." << std::endl;
-				std::cout << "State and Tag Data: " << tag << std::endl;
+				std::cout << "State: " << state << std::endl;
+				std::cout << "Tag: " << tag << std::endl;
 				std::cout << "Data: " << data << std::endl;
+				memData->SetWireData(data);
 				std::cout << "Cache: The state of the data is going from modified to modified" << std::endl;
 
 			}
@@ -189,8 +221,10 @@ void LevelOneCache::Update()
 
 				std::cout << "READ HIT" << std::endl;
 				std::cout << "The data in set " << setIndex << ", block " << block << " with a offset of " << blockOffset << " is in a exclusive state." << std::endl;
-				std::cout << "State and Tag Data: " << state + tag << std::endl;
+				std::cout << "State: " << state << std::endl;
+				std::cout << "Tag: " << tag << std::endl;
 				std::cout << "Data: " << data << std::endl;
+				memData->SetWireData(data);
 				std::cout << "Cache: The state of the data is going from exclusive to exclusive" << std::endl;
 
 			}
@@ -198,18 +232,138 @@ void LevelOneCache::Update()
 
 		}
 
-		// memWrite is logical high.
+		// CPU want to write
 		if (memWrite->GetWireDataStr().compare("1") == 0)
 		{
 			
+			// Invalid state.
+			if (state.compare("00") == 0)
+			{
+
+				std::cout << "WRITE MISS" << std::endl;
+				std::cout << "Cache: The data is in a invalid state." << std::endl;
+				std::cout << "Cache: Writing data " << memData->GetWireDataStr() << " to set "<< setIndex << std::endl;
+
+				if (block == 1)
+				{
+
+					blockOneTags[setIndex]->SetWireData("10" + tag);
+					blockOne[setIndex][blockOffset]->SetWireData(memData->GetWireDataStr());
+
+				}
+				else if (block == 2)
+				{
+
+					blockTwoTags[setIndex]->SetWireData("10" + tag);
+					blockTwo[setIndex][blockOffset]->SetWireData(memData->GetWireDataStr());
+
+				}
 
 
+				std::cout << "Cache: The state of the data is going from invalid to modified" << std::endl;
+
+				std::cout << "Cache: Telling other caches that a local cache is writing to a memory location. (RWITM)" << std::endl;
+				memBus->SetWireData("1100" + memoryAddress->GetWireDataStr());
+
+			}
+
+			// Shared state.
+			if (state.compare("01") == 0)
+			{
+
+				std::cout << "WRITE HIT" << std::endl;
+				std::cout << "The data in set " << setIndex << ", block " << block << " with a offset of " << blockOffset << " is in a shared state." << std::endl;
+				std::cout << "State: " << state << std::endl;
+				std::cout << "Tag: " << tag << std::endl;
+				std::cout << "Cache: Writing the data " << memData->GetWireDataStr() << " to the cache." << std::endl;
+
+				if (block == 1)
+				{
+
+					blockOneTags[setIndex]->SetWireData("10" + tag);
+					blockOne[setIndex][blockOffset]->SetWireData(memData->GetWireDataStr());
+
+				}
+				else if (block == 2)
+				{
+
+					blockTwoTags[setIndex]->SetWireData("10" + tag);
+					blockTwo[setIndex][blockOffset]->SetWireData(memData->GetWireDataStr());
+
+				}
+
+				//invalidateData = true;
+				interrupt->SetWireData("1");
+				
+				std::cout << "Cache: The state of the data is going from shared to modified" << std::endl;
+
+				std::cout << "Cache: Telling other caches to invalidate their data." << std::endl;
+				memBus->SetWireData("1000" + memoryAddress->GetWireDataStr());
+
+			}
+
+			// modified state.
+			if (state.compare("10") == 0)
+			{
+
+				std::cout << "WRITE HIT" << std::endl;
+				std::cout << "The data in set " << setIndex << ", block " << block << " with a offset of " << blockOffset << " is in a modified state." << std::endl;
+				std::cout << "State: " << state << std::endl;
+				std::cout << "Tag: " << tag << std::endl;
+				std::cout << "Cache: Writing the data " << memData->GetWireDataStr() << " to the cache." << std::endl;
+				
+				if (block == 1)
+				{
+
+					blockOne[setIndex][blockOffset]->SetWireData(memData->GetWireDataStr());
+
+				}
+				else if (block == 2)
+				{
+
+					blockTwo[setIndex][blockOffset]->SetWireData(memData->GetWireDataStr());
+
+				}
+
+
+				std::cout << "Cache: The state of the data is going from modified to modified" << std::endl;
+
+			}
+
+			// Exclusive state.
+			if (state.compare("11") == 0)
+			{
+
+				std::cout << "WRITE HIT" << std::endl;
+				std::cout << "The data in set " << setIndex << ", block " << block << " with a offset of " << blockOffset << " is in a exclusive state." << std::endl;
+				std::cout << "State: " << state << std::endl;
+				std::cout << "Tag: " << tag << std::endl;
+				std::cout << "Cache: Writing the data " << memData->GetWireDataStr() << " to the cache." << std::endl;
+
+				if (block == 1)
+				{
+
+					blockOneTags[setIndex]->SetWireData("10" + tag);
+					blockOne[setIndex][blockOffset]->SetWireData(memData->GetWireDataStr());
+
+				}
+				else if (block == 2)
+				{
+
+					blockTwoTags[setIndex]->SetWireData("10" + tag);
+					blockTwo[setIndex][blockOffset]->SetWireData(memData->GetWireDataStr());
+
+				}
+
+				std::cout << "Cache: The state of the data is going from exclusive to modified" << std::endl;
+
+			}
 
 		}
 
 	}
 	// Replacing the block in the set on a READ MISS
-	else
+	else if (isBlockBeingReplaced)
 	{
 		
 		if (grantWire->GetWireDataStr().compare("1") == 0)
@@ -256,9 +410,7 @@ void LevelOneCache::Update()
 
 					}
 
-					std::cout << "State and Tag Data: " << blockTwoTags[setIndex]->GetWireDataStr() << std::endl;
-					std::cout << "Data: " << blockTwo[setIndex][blockOffset]->GetWireDataStr() << std::endl;
-					
+					memData->SetWireData(blockTwo[setIndex][blockOffset]->GetWireDataStr());
 					lastUsedBlock = 2;
 
 				}
@@ -277,9 +429,8 @@ void LevelOneCache::Update()
 						blockOneTags[setIndex]->SetWireData("01" + tagData->GetWireDataStr());
 
 					}
-					
-					std::cout << "State and Tag Data: " << blockOneTags[setIndex]->GetWireDataStr() << std::endl;
-					std::cout << "Data: " << blockOne[setIndex][blockOffset]->GetWireDataStr() << std::endl;
+
+					memData->SetWireData(blockOne[setIndex][blockOffset]->GetWireDataStr());
 					lastUsedBlock = 1;
 
 				}
@@ -371,10 +522,129 @@ void LevelOneCache::Update()
 		}
 
 	}
-	
+	else if (forceCopyBack)
+	{
 
+		if (grantWire->GetWireDataStr().compare("1") == 0)
+		{
+
+			// Find the index.
+			int setIndex = BinaryToIndex(snoopIndexData);
+			setIndex = setIndex % SETS;
+			int blockOffset = BinaryToIndex(snoopOffsetData);
+
+			bool foundValidData = false;
+			int block = 0;
+
+			// For block 1
+			std::string tag1;
+			std::string state1;
+
+			// For block 2
+			std::string tag2;
+			std::string state2;
+
+			std::string data;
+			std::string state;
+
+			// Get the state and the tag from the block 1
+			tag1 = blockOneTags[setIndex]->GetWireDataStr();
+			state1 = tag1.substr(0, 2);
+			tag1 = tag1.substr(2, -1);
+
+			// Get the state and the tag from the block 2
+			tag2 = blockTwoTags[setIndex]->GetWireDataStr();
+			state2 = tag2.substr(0, 2);
+			tag2 = tag2.substr(2, -1);
+
+			if (tag1.compare(snoopTagData->GetWireDataStr()) == 0 && state1 == "10")
+			{
+
+				foundValidData = true;
+				data = blockOne[setIndex][blockOffset]->GetWireDataStr();
+				state = state1;
+				block = 1;
+
+
+			}
+			else if (tag2.compare(snoopTagData->GetWireDataStr()) == 0 && state2 == "10")
+			{
+
+				foundValidData = true;
+				data = blockTwo[setIndex][blockOffset]->GetWireDataStr();
+				state = state2;
+				block = 2;
+
+			}
+
+			if (snoopBlockOffset > 16)
+			{
+
+				// Invalid the data.
+				if (block == 1)
+				{
+
+					blockOneTags[setIndex]->SetWireData("00" + tag1);
+
+
+				}
+				else if (block == 2)
+				{
+
+					blockTwoTags[setIndex]->SetWireData("00" + tag2);
+
+				}
+
+				forceCopyBack = false;
+				memBus->SetWireData("000000000000000000000000000000000000");
+				replaceBlock->SetWireData("0");
+				requestWire->SetWireData("0");
+				interrupt->SetWireData("0");
+
+			}
+			else
+			{
+
+				ramData->SetWireData(data);
+				std::string address = tagData->GetWireDataStr() + indexData->GetWireDataStr() + IntTo4BitString(blockOffset);
+				memBus->SetWireData("0010" + address);
+				interrupt->SetWireData("1");
+
+				std::cout << "Cache: Copying back data to RAM." << std::endl;
+
+				snoopBlockOffset += 1;
+
+			}
+
+		}
+		else
+		{
+
+			std::cout << "Cache: Permission to write to the bus was not granted. The bus is busy." << std::endl;
+
+			// INVERTER
+			if (requestWire->GetWireDataStr().compare("1") == 0)
+			{
+
+				requestWire->SetWireData("0");
+
+			}
+			else
+			{
+
+				requestWire->SetWireData("1");
+
+			}
+
+
+		}
+		
+
+	}
+	
 }
 
+// REMOTLY INITATED ACCESSES
 void LevelOneCache::Snoop()
 {
 
@@ -391,53 +661,52 @@ void LevelOneCache::Snoop()
 	setIndex = setIndex % SETS;
 	int blockOffset = BinaryToIndex(offsetWire);
 
-	if (busTrans.compare("01") == 0)
+	bool foundValidData = false;
+	int block = 0;
+
+	// For block 1
+	std::string tag1;
+	std::string state1;
+
+	// For block 2
+	std::string tag2;
+	std::string state2;
+
+	std::string data;
+
+	// Get the state and the tag from the block 1
+	tag1 = blockOneTags[setIndex]->GetWireDataStr();
+	state1 = tag1.substr(0, 2);
+	tag1 = tag1.substr(2, -1);
+
+	// Get the state and the tag from the block 2
+	tag2 = blockTwoTags[setIndex]->GetWireDataStr();
+	state2 = tag2.substr(0, 2);
+	tag2 = tag2.substr(2, -1);
+
+	if (tag1.compare(tagWire->GetWireDataStr()) == 0 && state1 != "00")
 	{
 
-		bool foundValidData = false;
-		int block = 0;
-
-		// For block 1
-		std::string tag1;
-		std::string state1;
-
-		// For block 2
-		std::string tag2;
-		std::string state2;
-
-		// For reading
-		std::string state;
-		std::string data;
-
-		// Get the state and the tag from the block 1
-		tag1 = blockOneTags[setIndex]->GetWireDataStr();
-		state1 = tag1.substr(0, 2);
-		tag1 = tag1.substr(2, -1);
-
-		// Get the state and the tag from the block 2
-		tag2 = blockTwoTags[setIndex]->GetWireDataStr();
-		state2 = tag2.substr(0, 2);
-		tag2 = tag2.substr(2, -1);
-
-		if (tag1.compare(tagData->GetWireDataStr()) == 0 && state1.compare("00") != 0)
-		{
-			
-			foundValidData = true;
-			data = blockOne[setIndex][blockOffset]->GetWireDataStr();
-			state = state1;
-			block = 1;
+		foundValidData = true;
+		data = blockOne[setIndex][blockOffset]->GetWireDataStr();
+		state = state1;
+		block = 1;
 
 
-		}
-		else if (tag2.compare(tagData->GetWireDataStr()) == 0 && state2.compare("00") != 0)
-		{
+	}
+	else if (tag2.compare(tagWire->GetWireDataStr()) == 0 && state2 != "00")
+	{
 
-			foundValidData = true;
-			data = blockTwo[setIndex][blockOffset]->GetWireDataStr();
-			state = state2;
-			block = 2;
+		foundValidData = true;
+		data = blockTwo[setIndex][blockOffset]->GetWireDataStr();
+		state = state2;
+		block = 2;
 
-		}
+	}
+
+	// MEM READ
+	if (busTrans.compare("01") == 0)
+	{
 
 		if (foundValidData)
 		{
@@ -445,7 +714,22 @@ void LevelOneCache::Snoop()
 			snoopBlockOffset++;
 			std::cout << "Cache(snooping): Found the set that a cache is looking for. Removing the memRead and dumping the data onto the bus." << std::endl;
 			
-			memBus->SetWireData("0001" + data);
+			if (state.compare("10") == 0)
+			{
+
+				std::cout << "Cache(snooping): Copying back the data to ram." << std::endl;
+				ramData->SetWireData(data);
+				std::string address = tagData->GetWireDataStr() + indexData->GetWireDataStr() + IntTo4BitString(snoopBlockOffset);
+				memBus->SetWireData("0000" + address);
+				interrupt->SetWireData("1");
+
+			}
+			else
+			{
+
+				memBus->SetWireData("0001" + data);
+
+			}
 
 		}
 		else
@@ -480,21 +764,139 @@ void LevelOneCache::Snoop()
 
 
 			}
+			
+			// shared state
 			else if (state.compare("01") == 0)
 			{
 
 				std::cout << "Cache(snooping): The state of the data is going from shared to shared" << std::endl;
 
 			}
+			
+			// modified state
+			else if (state.compare("10") == 0)
+			{
+
+				std::cout << "Cache(snooping): The state of the data is going from modified to shared" << std::endl;
+
+				
+				if (block == 1)
+				{
+
+					blockOneTags[setIndex]->SetWireData("01" + tag1);
+
+				}
+				else if (block == 2)
+				{
+
+					blockTwoTags[setIndex]->SetWireData("01" + tag2);
+
+				}
+
+			}
+
+			snoopBlockOffset = 0;
+			interrupt->SetWireData("0");
 
 		}
 
+
+	}
+	
+	// INVALIDATE
+	else if (busTrans.compare("10") == 0)
+	{
+
+		if (foundValidData && state == "01")
+		{
+
+			std::cout << "Cache(snooping): Invalidating data with tag "<< tagWire->GetWireDataStr() << ", in set "<< setIndex << "(Shared to invalid)" << std::endl;
+
+			if (block == 1)
+			{
+
+				blockOneTags[setIndex]->SetWireData("00" + tag1);
+
+			}
+			else if (block == 2)
+			{
+
+				blockTwoTags[setIndex]->SetWireData("00" + tag2);
+
+			}
+
+		}
+
+	}
+
+	// RWITM
+	else if (busTrans.compare("11") == 0)
+	{
+		
+
+		if (foundValidData)
+		{
+			
+			// Exclusive state.
+			if (state.compare("11") == 0)
+			{
+
+				std::cout << "Cache(snooping): Found RWITM on the bus. The state of the data is going from exclusive to invalid." << std::endl;
+
+				// Invalid the data.
+				if (block == 1)
+				{
+
+					blockOneTags[setIndex]->SetWireData("00" + tag1);
+
+				}
+				else if (block == 2)
+				{
+
+					blockTwoTags[setIndex]->SetWireData("00" + tag2);
+
+				}
+
+			}
+
+			// modified state.
+			if (state.compare("10") == 0)
+			{
+
+				std::cout << "Cache(snooping): Found RWITM on the bus. The state of the data is going from modified to invalid." << std::endl;
+
+				forceCopyBack = true;
+				requestWire->SetWireData("1");
+				replaceBlock->SetWireData("1");
+				snoopTagData->SetWireData(tagWire->GetWireDataStr());
+				snoopIndexData->SetWireData(indexWire->GetWireDataStr());
+				snoopOffsetData->SetWireData(offsetWire->GetWireDataStr());
+				snoopBlockOffset = 0;
+
+			}
+
+
+		}
 
 	}
 
 	delete tagWire;
 	delete indexWire;
 	delete offsetWire;
+
+}
+
+void LevelOneCache::ConnectInterrupt(Wire* wire)
+{
+
+	interrupt = wire;
+
+}
+
+void LevelOneCache::ConnectWriteData(Wire* wire)
+{
+
+	ramData = wire;
 
 }
 

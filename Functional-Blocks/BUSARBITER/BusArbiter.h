@@ -14,7 +14,8 @@ public:
 
 	void ConnectRequestLines(Wire* wire1, Wire* wire2, Wire* wire3, Wire* wire4);
 	void ConnectGrantLines(Wire* wire1, Wire* wire2, Wire* wire3, Wire* wire4);
-	void ConnectMemoryLines(Wire* bus, Wire* read, Wire* write);
+	void ConnectInterruptLines(Wire* wire1, Wire* wire2, Wire* wire3, Wire* wire4);
+	void ConnectMemoryLines(Wire* bus, Wire* read, Wire* write, Wire* data);
 
 
 private:
@@ -29,10 +30,16 @@ private:
 	Wire* grantLine3;
 	Wire* grantLine4;
 
+	Wire* interrupt1;
+	Wire* interrupt2;
+	Wire* interrupt3;
+	Wire* interrupt4;
+
 	// NOTE: the memBus is 36 bits.
 	Wire* memBus;
 	Wire* memRead;
 	Wire* memWrite;
+	Wire* memData;
 
 };
 

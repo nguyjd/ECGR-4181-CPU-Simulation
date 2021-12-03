@@ -16,6 +16,9 @@ public:
 
 	void Snoop();
 
+	void ConnectInterrupt(Wire* wire);
+	void ConnectWriteData(Wire* wire);
+
 
 private:
 
@@ -39,11 +42,17 @@ private:
 	Wire* requestWire;
 	Wire* grantWire;
 	Wire* memBus;
+	Wire* interrupt;
+	Wire* ramData;
 
 	// Internal Wires
 	Wire* tagData;
 	Wire* indexData;
 	Wire* offsetData;
+
+	Wire* snoopTagData;
+	Wire* snoopIndexData;
+	Wire* snoopOffsetData;
 
 	// Has tags and state bits
 	std::vector<Wire*> blockOneTags;
@@ -55,6 +64,7 @@ private:
 
 	int lastUsedBlock;
 	bool isBlockBeingReplaced;
+	
 	bool exclusiveState;
 	bool sharedState;
 
@@ -62,6 +72,12 @@ private:
 	int setIndex;
 
 	int snoopBlockOffset;
+
+	// RWITM - 11
+	// MEM READ - 01
+	// INVALIDATE - 10
+	bool invalidateData;
+	bool forceCopyBack;
 
 };
 

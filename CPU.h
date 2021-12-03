@@ -9,7 +9,7 @@ class CPU
 {
 
 public:
-	CPU(Wire* memBus, Wire* request, Wire* grant);
+	CPU(Wire* memBus, Wire* request, Wire* grant, Wire* interrupt, Wire* halt, Wire* memData);
 	~CPU();
 
 	void Update();
@@ -27,6 +27,7 @@ private:
 	Wire* memAddress;
 	Wire* data;
 	Wire* stall;
+	Wire* haltLine;
 
 	LevelOneCache* cache;
 

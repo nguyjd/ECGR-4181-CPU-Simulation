@@ -208,6 +208,8 @@ void DataMemory::Update()
 				//data += ram[indexLoc + 1]->GetWireDataStr();
 				data += ram[indexLoc]->GetWireDataStr();
 
+				std::cout << "RAM: Outputting data " << data << std::endl;
+
 				outputThirtyTwoBits->SetWireData(data);
 
 			}
@@ -245,7 +247,10 @@ void DataMemory::Update()
 			if (memSize->GetWireDataStr().compare("10") == 0)
 			{
 
+				
+
 				ram[indexLoc]->SetWireData(dataIn->GetWireDataStr());
+				outputThirtyTwoBits->SetWireData(dataIn->GetWireDataStr());
 				//ram[indexLoc + 1]->SetWireData(byte3);
 				//ram[indexLoc + 2]->SetWireData(byte2);
 				//ram[indexLoc + 3]->SetWireData(byte1);

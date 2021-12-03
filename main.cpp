@@ -10,7 +10,7 @@ int main()
 {
 
 	int clockCount = 0;
-	bool delay = true;
+	bool delay = false;
 	
 	// Ram input Wires
 	Wire* memSize = new Wire(2);
@@ -27,29 +27,35 @@ int main()
 	// Control lines
 	Wire* requestLine1 = new Wire(1);
 	Wire* grantLine1 = new Wire(1);
-
+	Wire* interrupt1 = new Wire(1);
 	Wire* requestLine2 = new Wire(1);
 	Wire* grantLine2 = new Wire(1);
-
+	Wire* interrupt2 = new Wire(1);
 	Wire* requestLine3 = new Wire(1);
 	Wire* grantLine3 = new Wire(1);
-
+	Wire* interrupt3 = new Wire(1);
 	Wire* requestLine4 = new Wire(1);
 	Wire* grantLine4 = new Wire(1);
+	Wire* interrupt4 = new Wire(1);
+	Wire* halt1 = new Wire(1);
+	Wire* halt2 = new Wire(1);
+	Wire* halt3 = new Wire(1);
+	Wire* halt4 = new Wire(1);
 
 	Wire* bus = new Wire(36);
 
-	CPU* cpu1 = new CPU(bus, requestLine1, grantLine1);
-	CPU* cpu2 = new CPU(bus, requestLine2, grantLine2);
-	CPU* cpu3 = new CPU(bus, requestLine3, grantLine3);
-	CPU* cpu4 = new CPU(bus, requestLine4, grantLine4);
+	CPU* cpu1 = new CPU(bus, requestLine1, grantLine1, interrupt1, halt1, dataIn);
+	CPU* cpu2 = new CPU(bus, requestLine2, grantLine2, interrupt2, halt2, dataIn);
+	CPU* cpu3 = new CPU(bus, requestLine3, grantLine3, interrupt3, halt3, dataIn);
+	CPU* cpu4 = new CPU(bus, requestLine4, grantLine4, interrupt4, halt4, dataIn);
 	DataMemory* ram = new DataMemory(memSize, memRead, memWrite, dataIn, address, outputEightBits, outputSixteenBits, outputThirtyTwoBits);
 	BusArbiter* busArbiter = new BusArbiter();
 
 	// Connect all the control lines.
 	busArbiter->ConnectGrantLines(grantLine1, grantLine2, grantLine3, grantLine4);
 	busArbiter->ConnectRequestLines(requestLine1, requestLine2, requestLine3, requestLine4);
-	busArbiter->ConnectMemoryLines(bus, memRead, memWrite);
+	busArbiter->ConnectMemoryLines(bus, memRead, memWrite, dataIn);
+	busArbiter->ConnectInterruptLines(interrupt1, interrupt2, interrupt3, interrupt4);
 
 	// Force the ram to output 32 bits.
 	memSize->SetWireData("10");
@@ -57,15 +63,27 @@ int main()
 
 	// Feed the cpus intructions.
 	cpu1->Read("00000000000000000000000000000001");
-	cpu1->Read("00000000000000000000000000100001");
-	cpu1->Write("00000000000000000000000000100001", "00000000000000000000000000000001");
+	cpu1->Read("00000000000000101000000011000000");
+	cpu1->Read("00000000000000000100000000000000");
+	cpu1->Write("00000000000000000100000000000000", "11111111111111111111111111111111");
+	cpu1->Write("00000000000000101000000000000000", "11111111111111111111111111111111");
+	
+	
+	cpu2->Read("00000000000000000100000000000000");
+	cpu2->Write("00000000000000000000000000000001", "10101010010111101010110101011111");
+	cpu2->Read("00000000000000000000011000000000");
+	cpu2->Read("00000000000000001110000000000000");
 
-	cpu2->Read("00000000000000000000000000100011");
+	cpu3->Read("00000000000000001110000000000000");
+	cpu3->Read("00000000000000001110000000000000");
+	cpu3->Write("00000000000000001110000000000000", "10100101011111111001110000011111");
+	cpu3->Read("00000000000000001110000000000000");
+	cpu3->Write("00000000000000001110000000000000", "10000101000010010000000000000000");
+	cpu3->Read("00000000000000000100000000000000");
+	cpu3->Read("00000000000000000100000000000000");
 
-	cpu3->Read("00000000000000000000000000100010");
-
-	cpu4->Read("00000000000000000000001000000000");
-
+	cpu4->Read("00000000000000101000000000000000");
+	cpu4->Write("00000000000000101000000000000000", "10100101001010010101111111110000");
 
 	while (true)
 	{
@@ -81,11 +99,11 @@ int main()
 		cpu4->CacheSnoop();
 		busArbiter->Update();
 
+
 		std::cout << "-------------------CPU 2-------------------" << std::endl;
 		cpu2->Update();
 		std::cout << "-------------------------------------------" << std::endl;
 
-		
 		cpu1->CacheSnoop();
 		cpu3->CacheSnoop();
 		cpu4->CacheSnoop();
@@ -95,7 +113,6 @@ int main()
 		cpu3->Update();
 		std::cout << "-------------------------------------------" << std::endl;
 
-		
 		cpu1->CacheSnoop();
 		cpu2->CacheSnoop();
 		cpu4->CacheSnoop();
@@ -123,7 +140,12 @@ int main()
 
 		}
 
-		
+		if (halt1->GetWireDataStr() == "1" && halt2->GetWireDataStr() == "1" && halt3->GetWireDataStr() == "1" && halt4->GetWireDataStr() == "1")
+		{
+
+			break;
+
+		}
 
 		clockCount++;
 		std::cout << std::endl;
